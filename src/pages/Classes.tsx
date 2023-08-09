@@ -1,20 +1,42 @@
-import React, { useState } from "react";
-import { fetchClasses } from "../queryHooks";
+import React, { useEffect, useState } from "react";
+import {
+  createClass,
+  deleteClass,
+  fetchClasses,
+  resetClasses,
+} from "../queryHooks";
 
 export default function Classes() {
-  const [classes, setClasses] = useState([]);
+  const [classes, setClasses] = useState<[] | null>(null);
 
-  fetchClasses().then((res) => {
-    setClasses(res);
+  useEffect(() => {
+    fetchClasses().then((res) => {
+      setClasses(res);
+    });
   });
+
+  const newClass = {
+    numeric: "Numeric",
+    title: "Title",
+    professor: "professor",
+  };
+
   return (
     <div>
       <h1>My Classes</h1>
-      {classes.map((c: any) => (
-        <p key={c.id}>
-          {c.id}. {c.title}
-        </p>
-      ))}
+      <button onClick={() => createClass(newClass)}>Create Class</button>
+      <button onClick={resetClasses}>Reset All Classes</button>
+      {classes &&
+        classes.map((c: any) => (
+          <div key={c.id}>
+            <p>
+              {c.id}. {c.title}
+            </p>
+            <button onClick={() => deleteClass(c.id, c.title)}>
+              Delete Class
+            </button>
+          </div>
+        ))}
     </div>
   );
 }
