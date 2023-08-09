@@ -20,7 +20,6 @@ exports.classesAll = async (req, res) => {
 // Create new class
 exports.classesCreate = async (req, res) => {
   // Add new class to database
-  console.log(req);
   knex("Classes")
     .insert({
       // insert new record, a class
