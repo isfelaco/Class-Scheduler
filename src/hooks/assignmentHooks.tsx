@@ -30,7 +30,6 @@ export const createAssignment = (props: AssignmentParams) => {
       dueDate: props.dueDate,
     })
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((error) => {

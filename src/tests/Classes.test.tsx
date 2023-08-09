@@ -3,7 +3,7 @@ import {
   deleteClass,
   fetchClasses,
   resetClasses,
-} from "../queryHooks";
+} from "../hooks/classHooks";
 import axios from "axios";
 
 jest.mock("axios");
