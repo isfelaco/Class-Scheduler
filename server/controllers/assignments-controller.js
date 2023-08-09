@@ -5,7 +5,6 @@ exports.assignmentsAll = async (req, res) => {
     .select("*")
     .from("assignments")
     .then((userData) => {
-      console.log("HERE");
       res.json(userData);
     })
     .catch((err) => {
@@ -22,7 +21,6 @@ exports.assignmentsCreate = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       dueDate: req.body.dueDate,
-      status: req.body.status,
     })
     .then(() => {
       res.json({

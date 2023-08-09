@@ -6,6 +6,7 @@ export default function Home() {
     <div>
       <div>
         <NavLink to="/my-classes">My Classes</NavLink>
+        <NavLink to="/my-assignments">My Assignments</NavLink>
       </div>
     </div>
   );

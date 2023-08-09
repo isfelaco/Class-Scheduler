@@ -67,7 +67,6 @@ knex.schema
           table.string("title");
           table.string("description");
           table.timestamp("dueDate");
-          table.string("status");
         })
         .then(() => {
           console.log("Table 'Assignments' created");

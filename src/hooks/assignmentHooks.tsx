@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchClasses = () => {
+export const fetchAssignments = () => {
   return axios
     .get("http://localhost:4001/assignments/all")
     .then((res) => {
@@ -18,20 +18,19 @@ export type AssignmentParams = {
   classID: number;
   title: string;
   description: string;
-  dueDate: string;
-  status: string;
+  dueDate: Date;
 };
 
-export const createClass = (props: AssignmentParams) => {
+export const createAssignment = (props: AssignmentParams) => {
   return axios
-    .post("http://localhost:4001/classes/create", {
+    .post("http://localhost:4001/assignments/create", {
       classID: props.classID,
       title: props.title,
       description: props.description,
       dueDate: props.dueDate,
-      status: props.status,
     })
     .then((res) => {
+      console.log(res.data);
       return res.data;
     })
     .catch((error) => {
@@ -42,7 +41,7 @@ export const createClass = (props: AssignmentParams) => {
     });
 };
 
-export const deleteClass = (id: number, title: string) => {
+export const deleteAssignment = (id: number, title: string) => {
   return axios
     .put("http://localhost:4001/assignments/delete", { id: id })
     .then((res) => {
@@ -56,7 +55,7 @@ export const deleteClass = (id: number, title: string) => {
     });
 };
 
-export const resetClasses = () => {
+export const resetAssignments = () => {
   return axios
     .put("http://localhost:4001/assignments/reset")
     .then((res) => {
