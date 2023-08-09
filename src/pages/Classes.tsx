@@ -4,7 +4,7 @@ import {
   deleteClass,
   fetchClasses,
   resetClasses,
-} from "../queryHooks";
+} from "../hooks/classHooks";
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
