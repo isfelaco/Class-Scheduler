@@ -13,10 +13,6 @@ const knex = require("knex")({
   useNullAsDefault: true,
 });
 
-// knex.schema.dropTableIfExists("classes").then(() => {
-//   console.log("here");
-// });
-
 // Create a table in the database called "classes"
 knex.schema
   // Make sure no "classes" table exists
@@ -71,6 +67,7 @@ knex.schema
           table.string("title");
           table.string("description");
           table.timestamp("dueDate");
+          table.string("status");
         })
         .then(() => {
           console.log("Table 'Assignments' created");

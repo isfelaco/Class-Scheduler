@@ -48,11 +48,9 @@ exports.classesDelete = async (req, res) => {
     .del()
     .where({ id: req.body.id }) // find correct record based on id
     .then(() => {
-      // console.log("here", res);
       // Send a success message in response
       res.json({
         message: `Class with id ${req.body.id} deleted.`,
-        idk: `${res}`,
       });
     })
     .catch((err) => {
