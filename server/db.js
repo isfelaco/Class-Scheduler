@@ -53,7 +53,40 @@ knex.schema
 knex
   .select("*")
   .from("classes")
-  .then((data) => console.log("data:", data))
+  .then((data) => console.log("Classes:", data))
+  .catch((err) => console.log(err));
+
+knex.schema
+  .hasTable("assignments")
+  .then((exists) => {
+    if (!exists) {
+      return knex.schema
+        .createTable("assignments", (table) => {
+          table.increments("id").primary();
+          table.integer("classID");
+          table.string("title");
+          table.string("description");
+          table.timestamp("dueDate");
+        })
+        .then(() => {
+          console.log("Table 'Assignments' created");
+        })
+        .catch((error) => {
+          console.error(`There was an error creating table: ${error}`);
+        });
+    }
+  })
+  .then(() => {
+    console.log("done");
+  })
+  .catch((error) => {
+    console.error(`There was an error setting up the database: ${error}`);
+  });
+
+knex
+  .select("*")
+  .from("assignments")
+  .then((data) => console.log("Assignments:", data))
   .catch((err) => console.log(err));
 
 // Export the database

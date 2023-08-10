@@ -20,7 +20,6 @@ exports.classesAll = async (req, res) => {
 // Create new class
 exports.classesCreate = async (req, res) => {
   // Add new class to database
-  console.log(req);
   knex("Classes")
     .insert({
       // insert new record, a class
@@ -49,11 +48,9 @@ exports.classesDelete = async (req, res) => {
     .del()
     .where({ id: req.body.id }) // find correct record based on id
     .then(() => {
-      // console.log("here", res);
       // Send a success message in response
       res.json({
         message: `Class with id ${req.body.id} deleted.`,
-        idk: `${res}`,
       });
     })
     .catch((err) => {
