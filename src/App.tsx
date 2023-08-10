@@ -7,6 +7,8 @@ import Class from "./pages/Class";
 import styled from "styled-components";
 
 const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: pink;
   min-height: 100vh;
 `;
