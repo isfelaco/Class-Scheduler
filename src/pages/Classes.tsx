@@ -34,10 +34,8 @@ export default function Classes() {
   };
 
   const handleCreateClass = async () => {
-    await createClass(newClass);
-    const c = await fetchClass(newClass.numeric);
-    openClass(c[0]);
-    console.log(c);
+    const c = await createClass(newClass);
+    openClass(c);
   };
 
   return (

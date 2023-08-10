@@ -18,7 +18,6 @@ export const fetchClass = (numeric: string) => {
   return axios
     .put("http://localhost:4001/classes/get", { numeric: numeric })
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((error) => {
