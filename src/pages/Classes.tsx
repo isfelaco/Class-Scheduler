@@ -18,12 +18,6 @@ export default function Classes() {
     });
   });
 
-  const newClass = {
-    numeric: "CS 1111",
-    title: "Title",
-    professor: "professor",
-  };
-
   const navigate = useNavigate();
   const openClass = (c: ClassObject) => {
     navigate(`/my-classes/${c.numeric}`, {
@@ -33,15 +27,41 @@ export default function Classes() {
     });
   };
 
-  const handleCreateClass = async () => {
-    const c = await createClass(newClass);
+  // source: https://www.designcise.com/web/tutorial/how-to-convert-html-form-data-to-javascript-object
+  function formDataToObject(formData: any) {
+    const normalizeValues = (values: any) =>
+      values.length > 1 ? values : values[0];
+    const formElemKeys = Array.from(formData.keys());
+    return Object.fromEntries(
+      // store array of values or single value for element key
+      formElemKeys.map((key) => [key, normalizeValues(formData.getAll(key))])
+    );
+  }
+
+  const handleCreateClass = async (e: any) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const obj = formDataToObject(formData);
+    const c = await createClass(obj);
     openClass(c);
   };
 
   return (
     <div>
       <h1>My Classes</h1>
-      <button onClick={handleCreateClass}>Add Class</button>
+      <div>
+        <form onSubmit={handleCreateClass}>
+          <h2>Create Class</h2>
+          <label>Numeric</label>
+          <input type="text" name="numeric" />
+          <label>Title</label>
+          <input type="text" name="title" />
+          <label>Professor</label>
+          <input type="text" name="professor" />
+          <input type="submit" value="Create" />
+        </form>
+      </div>
+
       <button onClick={resetClasses}>Reset All Classes</button>
       <table>
         <thead>
