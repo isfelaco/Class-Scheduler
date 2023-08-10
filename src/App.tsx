@@ -1,10 +1,15 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Classes from "./pages/Classes";
 import Assignments from "./pages/Assignments";
 import Class from "./pages/Class";
+import styled from "styled-components";
+
+const AppContainer = styled.div`
+  background-color: pink;
+  min-height: 100vh;
+`;
 
 export const pages: { [id: string]: ReactElement } = {
   "/": <Home />,
@@ -15,7 +20,7 @@ export const pages: { [id: string]: ReactElement } = {
 
 export default function App() {
   return (
-    <div className="App">
+    <AppContainer>
       <BrowserRouter>
         <Routes>
           {Object.entries(pages).map(([route, element], i) => (
@@ -23,6 +28,6 @@ export default function App() {
           ))}
         </Routes>
       </BrowserRouter>
-    </div>
+    </AppContainer>
   );
 }
