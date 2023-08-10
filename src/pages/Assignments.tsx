@@ -48,6 +48,11 @@ export default function Assignments() {
                   <button onClick={() => deleteAssignment(a.id, a.title)}>
                     Delete Class
                   </button>
+                  <button
+                    onClick={() => console.log("View class " + a.classID)}
+                  >
+                    View Class
+                  </button>
                 </td>
               </tr>
             ))}

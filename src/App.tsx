@@ -4,10 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Classes from "./pages/Classes";
 import Assignments from "./pages/Assignments";
+import Class from "./pages/Class";
 
 export const pages: { [id: string]: ReactElement } = {
   "/": <Home />,
   "/my-classes": <Classes />,
+  "/my-classes/:n": <Class />,
   "/my-assignments": <Assignments />,
 };
 

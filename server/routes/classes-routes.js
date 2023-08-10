@@ -12,6 +12,8 @@ const router = express.Router();
 // this means that '/all' translates to '/classes/all'
 router.get("/all", classesRoutes.classesAll);
 
+router.put("/get", classesRoutes.classGet);
+
 // Add route for POST request to create new class
 // In server.js, classes route is specified as '/classes'
 // this means that '/create' translates to '/classes/create'

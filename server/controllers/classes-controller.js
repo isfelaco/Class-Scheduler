@@ -17,6 +17,21 @@ exports.classesAll = async (req, res) => {
     });
 };
 
+exports.classGet = async (req, res) => {
+  // Get all classes from database
+  knex("Classes")
+    .where({ numeric: req.body.numeric }) // find correct record based on id
+    .first()
+    .then((userData) => {
+      // Send classes extracted from database in response
+      res.json(userData);
+    })
+    .catch((err) => {
+      // Send a error message in response
+      res.json({ message: `There was an error retrieving the class: ${err}` });
+    });
+};
+
 // Create new class
 exports.classesCreate = async (req, res) => {
   // Add new class to database
@@ -27,11 +42,13 @@ exports.classesCreate = async (req, res) => {
       title: req.body.title,
       professor: req.body.professor,
     })
-    .then(() => {
-      // Send a success message in response
-      res.json({
-        message: `Class \'${req.body.numeric}\' created.`,
-      });
+    .then((insertedClass) => {
+      knex("Classes")
+        .where({ id: insertedClass[0] })
+        .first()
+        .then((selectedClass) => {
+          return res.json(selectedClass);
+        });
     })
     .catch((err) => {
       // Send a error message in response

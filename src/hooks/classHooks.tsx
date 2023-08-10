@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ClassObject } from "../types";
 
 export const fetchClasses = () => {
   // Send GET request to 'classes/all' endpoint
@@ -13,13 +14,19 @@ export const fetchClasses = () => {
     });
 };
 
-export type ClassParams = {
-  numeric: string;
-  title: string;
-  professor: string;
+export const fetchClass = (numeric: string) => {
+  return axios
+    .put("http://localhost:4001/classes/get", { numeric: numeric })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(`There was an error retrieving the class: ${error}`);
+      throw new Error(error);
+    });
 };
 
-export const createClass = (props: ClassParams) => {
+export const createClass = (props: ClassObject) => {
   // Send POST request to 'classes/create' endpoint
   return axios
     .post("http://localhost:4001/classes/create", {
