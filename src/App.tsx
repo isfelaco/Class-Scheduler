@@ -9,6 +9,7 @@ import Class from "./pages/Class";
 export const pages: { [id: string]: ReactElement } = {
   "/": <Home />,
   "/my-classes": <Classes />,
+  "/my-classes/:n": <Class />,
   "/my-assignments": <Assignments />,
 };
 
@@ -20,7 +21,6 @@ export default function App() {
           {Object.entries(pages).map(([route, element], i) => (
             <Route path={route} element={element} key={i} />
           ))}
-          <Route path="/my-classes/:id" element={<Class />} />
         </Routes>
       </BrowserRouter>
     </div>

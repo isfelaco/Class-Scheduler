@@ -17,6 +17,21 @@ exports.classesAll = async (req, res) => {
     });
 };
 
+exports.classGet = async (req, res) => {
+  // Get all classes from database
+  knex("Classes")
+    .select("*") // select all records
+    .where({ numeric: req.body.numeric }) // find correct record based on id
+    .then((userData) => {
+      // Send classes extracted from database in response
+      res.json(userData);
+    })
+    .catch((err) => {
+      // Send a error message in response
+      res.json({ message: `There was an error retrieving the class: ${err}` });
+    });
+};
+
 // Create new class
 exports.classesCreate = async (req, res) => {
   // Add new class to database

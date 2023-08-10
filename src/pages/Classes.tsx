@@ -5,6 +5,7 @@ import {
   deleteClass,
   fetchClasses,
   resetClasses,
+  fetchClass,
 } from "../hooks/classHooks";
 import { ClassObject } from "../types";
 
@@ -18,7 +19,7 @@ export default function Classes() {
   });
 
   const newClass = {
-    numeric: "Numeric",
+    numeric: "CS 1111",
     title: "Title",
     professor: "professor",
   };
@@ -32,10 +33,17 @@ export default function Classes() {
     });
   };
 
+  const handleCreateClass = async () => {
+    await createClass(newClass);
+    const c = await fetchClass(newClass.numeric);
+    openClass(c[0]);
+    console.log(c);
+  };
+
   return (
     <div>
       <h1>My Classes</h1>
-      <button onClick={() => createClass(newClass)}>Add Class</button>
+      <button onClick={handleCreateClass}>Add Class</button>
       <button onClick={resetClasses}>Reset All Classes</button>
       <table>
         <thead>

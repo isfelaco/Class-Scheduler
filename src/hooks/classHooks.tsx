@@ -14,6 +14,19 @@ export const fetchClasses = () => {
     });
 };
 
+export const fetchClass = (numeric: string) => {
+  return axios
+    .put("http://localhost:4001/classes/get", { numeric: numeric })
+    .then((res) => {
+      console.log(res.data);
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(`There was an error retrieving the class: ${error}`);
+      throw new Error(error);
+    });
+};
+
 export const createClass = (props: ClassObject) => {
   // Send POST request to 'classes/create' endpoint
   return axios
