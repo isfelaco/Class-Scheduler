@@ -24,19 +24,33 @@ export default function Classes() {
   return (
     <div>
       <h1>My Classes</h1>
-      <button onClick={() => createClass(newClass)}>Create Class</button>
+      <button onClick={() => createClass(newClass)}>Add Class</button>
       <button onClick={resetClasses}>Reset All Classes</button>
-      {classes &&
-        classes.map((c: any) => (
-          <div key={c.id}>
-            <p>
-              {c.id}. {c.title}
-            </p>
-            <button onClick={() => deleteClass(c.id, c.title)}>
-              Delete Class
-            </button>
-          </div>
-        ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Numeric</th>
+            <th>Title</th>
+            <th>Professor</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {classes &&
+            classes.map((c: any) => (
+              <tr key={c.id}>
+                <td>{c.numeric}</td>
+                <td>{c.title}</td>
+                <td>{c.professor}</td>
+                <td>
+                  <button onClick={() => deleteClass(c.id, c.title)}>
+                    Delete Class
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 }

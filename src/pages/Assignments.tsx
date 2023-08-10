@@ -28,17 +28,31 @@ export default function Assignments() {
       <button onClick={() => createAssignment(newAssignment)}>
         Create Assignment
       </button>
-      {assignments &&
-        assignments.map((a: any) => (
-          <div key={a.id}>
-            <p>
-              {a.id}. {a.title}
-            </p>
-            <button onClick={() => deleteAssignment(a.id, a.title)}>
-              Delete Class
-            </button>
-          </div>
-        ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {assignments &&
+            assignments.map((a: any) => (
+              <tr key={a.id}>
+                <td>{a.classID}</td>
+                <td>{a.title}</td>
+                <td>{a.description}</td>
+                <td>
+                  <button onClick={() => deleteAssignment(a.id, a.title)}>
+                    Delete Class
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 }
