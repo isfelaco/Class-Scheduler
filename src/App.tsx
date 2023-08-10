@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Classes from "./pages/Classes";
 import Assignments from "./pages/Assignments";
+import Class from "./pages/Class";
 
 export const pages: { [id: string]: ReactElement } = {
   "/": <Home />,
@@ -19,6 +20,7 @@ export default function App() {
           {Object.entries(pages).map(([route, element], i) => (
             <Route path={route} element={element} key={i} />
           ))}
+          <Route path="/my-classes/:id" element={<Class />} />
         </Routes>
       </BrowserRouter>
     </div>

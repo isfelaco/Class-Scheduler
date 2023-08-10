@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   createClass,
   deleteClass,
   fetchClasses,
   resetClasses,
 } from "../hooks/classHooks";
+import { ClassObject } from "../types";
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
@@ -19,6 +21,15 @@ export default function Classes() {
     numeric: "Numeric",
     title: "Title",
     professor: "professor",
+  };
+
+  const navigate = useNavigate();
+  const openClass = (c: ClassObject) => {
+    navigate(`/my-classes/${c.numeric}`, {
+      state: {
+        class: c,
+      },
+    });
   };
 
   return (
@@ -43,6 +54,7 @@ export default function Classes() {
                 <td>{c.title}</td>
                 <td>{c.professor}</td>
                 <td>
+                  <button onClick={() => openClass(c)}>View Class</button>
                   <button onClick={() => deleteClass(c.id, c.title)}>
                     Delete Class
                   </button>

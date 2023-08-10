@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AssignmentObject } from "../types";
 
 export const fetchAssignments = () => {
   return axios
@@ -14,14 +15,7 @@ export const fetchAssignments = () => {
     });
 };
 
-export type AssignmentParams = {
-  classID: number;
-  title: string;
-  description: string;
-  dueDate: Date;
-};
-
-export const createAssignment = (props: AssignmentParams) => {
+export const createAssignment = (props: AssignmentObject) => {
   return axios
     .post("http://localhost:4001/assignments/create", {
       classID: props.classID,
