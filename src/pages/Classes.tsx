@@ -8,9 +8,19 @@ import {
   fetchClass,
 } from "../hooks/classHooks";
 import { ClassObject } from "../types";
+import Table from "../components/Table";
+import styled from "styled-components";
+import Modal from "../components/Modal";
+
+const ClassesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
+  const [openModal, setModal] = useState(false);
 
   useEffect(() => {
     fetchClasses().then((res) => {
@@ -39,6 +49,7 @@ export default function Classes() {
   }
 
   const handleCreateClass = async (e: any) => {
+    setModal(false);
     e.preventDefault();
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData);
@@ -47,48 +58,30 @@ export default function Classes() {
   };
 
   return (
-    <div>
+    <ClassesContainer>
       <h1>My Classes</h1>
-      <div>
-        <form onSubmit={handleCreateClass}>
-          <h2>Create Class</h2>
-          <label>Numeric</label>
-          <input type="text" name="numeric" />
-          <label>Title</label>
-          <input type="text" name="title" />
-          <label>Professor</label>
-          <input type="text" name="professor" />
-          <input type="submit" value="Create" />
-        </form>
-      </div>
-
+      <button onClick={() => setModal(true)}>Add a Class</button>
       <button onClick={resetClasses}>Reset All Classes</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Numeric</th>
-            <th>Title</th>
-            <th>Professor</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {classes &&
-            classes.map((c: any) => (
-              <tr key={c.id}>
-                <td>{c.numeric}</td>
-                <td>{c.title}</td>
-                <td>{c.professor}</td>
-                <td>
-                  <button onClick={() => openClass(c)}>View Class</button>
-                  <button onClick={() => deleteClass(c.id, c.title)}>
-                    Delete Class
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
+      <Table
+        headerData={["Numeric", "Professor", "Title"]}
+        data={classes}
+        onView={openClass}
+        onDelete={deleteClass}
+      />
+      {openModal && (
+        <Modal onClose={() => setModal(false)}>
+          <form onSubmit={handleCreateClass}>
+            <h2>Create Class</h2>
+            <label>Numeric</label>
+            <input type="text" name="numeric" />
+            <label>Title</label>
+            <input type="text" name="title" />
+            <label>Professor</label>
+            <input type="text" name="professor" />
+            <input type="submit" value="Create" />
+          </form>
+        </Modal>
+      )}
+    </ClassesContainer>
   );
 }
