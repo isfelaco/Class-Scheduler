@@ -14,6 +14,19 @@ exports.assignmentsAll = async (req, res) => {
     });
 };
 
+exports.assignmentsSome = async (req, res) => {
+  knex("Assignments")
+    .where({ classID: req.body.id }) // find correct record based on id
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving assignments: ${err}`,
+      });
+    });
+};
+
 exports.assignmentsCreate = async (req, res) => {
   knex("Assignments")
     .insert({

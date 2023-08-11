@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get("/all", assignmentsRoutes.assignmentsAll);
 
+router.put("/some", assignmentsRoutes.assignmentsSome);
+
 router.post("/create", assignmentsRoutes.assignmentsCreate);
 
 router.put("/delete", assignmentsRoutes.assignmentsDelete);

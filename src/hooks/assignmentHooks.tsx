@@ -15,6 +15,20 @@ export const fetchAssignments = () => {
     });
 };
 
+export const classAssignments = (id: number) => {
+  return axios
+    .put("http://localhost:4001/assignments/some", { id: id })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(
+        `There was an error retrieving the assignments list: ${error}`
+      );
+      throw new Error(error);
+    });
+};
+
 export const createAssignment = (props: AssignmentObject) => {
   return axios
     .post("http://localhost:4001/assignments/create", {

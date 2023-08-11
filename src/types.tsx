@@ -6,6 +6,7 @@ export type ClassObject = {
 };
 
 export type AssignmentObject = {
+  id?: number;
   classID: number;
   title: string;
   description: string;
