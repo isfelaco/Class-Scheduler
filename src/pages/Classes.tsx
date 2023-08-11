@@ -10,6 +10,7 @@ import {
 import { ClassObject } from "../types";
 import Table from "../components/Table";
 import styled from "styled-components";
+import Modal from "../components/Modal";
 
 const ClassesContainer = styled.div`
   display: flex;
@@ -19,6 +20,7 @@ const ClassesContainer = styled.div`
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
+  const [openModal, setModal] = useState(false);
 
   useEffect(() => {
     fetchClasses().then((res) => {
@@ -47,6 +49,7 @@ export default function Classes() {
   }
 
   const handleCreateClass = async (e: any) => {
+    setModal(false);
     e.preventDefault();
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData);
@@ -57,19 +60,7 @@ export default function Classes() {
   return (
     <ClassesContainer>
       <h1>My Classes</h1>
-      <div>
-        <form onSubmit={handleCreateClass}>
-          <h2>Create Class</h2>
-          <label>Numeric</label>
-          <input type="text" name="numeric" />
-          <label>Title</label>
-          <input type="text" name="title" />
-          <label>Professor</label>
-          <input type="text" name="professor" />
-          <input type="submit" value="Create" />
-        </form>
-      </div>
-
+      <button onClick={() => setModal(true)}>Add a Class</button>
       <button onClick={resetClasses}>Reset All Classes</button>
       <Table
         headerData={["Numeric", "Professor", "Title"]}
@@ -77,6 +68,20 @@ export default function Classes() {
         onView={openClass}
         onDelete={deleteClass}
       />
+      {openModal && (
+        <Modal onClose={() => setModal(false)}>
+          <form onSubmit={handleCreateClass}>
+            <h2>Create Class</h2>
+            <label>Numeric</label>
+            <input type="text" name="numeric" />
+            <label>Title</label>
+            <input type="text" name="title" />
+            <label>Professor</label>
+            <input type="text" name="professor" />
+            <input type="submit" value="Create" />
+          </form>
+        </Modal>
+      )}
     </ClassesContainer>
   );
 }
