@@ -8,6 +8,14 @@ import {
   fetchClass,
 } from "../hooks/classHooks";
 import { ClassObject } from "../types";
+import Table from "../components/Table";
+import styled from "styled-components";
+
+const ClassesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
@@ -47,7 +55,7 @@ export default function Classes() {
   };
 
   return (
-    <div>
+    <ClassesContainer>
       <h1>My Classes</h1>
       <div>
         <form onSubmit={handleCreateClass}>
@@ -63,32 +71,12 @@ export default function Classes() {
       </div>
 
       <button onClick={resetClasses}>Reset All Classes</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Numeric</th>
-            <th>Title</th>
-            <th>Professor</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {classes &&
-            classes.map((c: any) => (
-              <tr key={c.id}>
-                <td>{c.numeric}</td>
-                <td>{c.title}</td>
-                <td>{c.professor}</td>
-                <td>
-                  <button onClick={() => openClass(c)}>View Class</button>
-                  <button onClick={() => deleteClass(c.id, c.title)}>
-                    Delete Class
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
+      <Table
+        headerData={["Numeric", "Professor", "Title"]}
+        data={classes}
+        onView={openClass}
+        onDelete={deleteClass}
+      />
+    </ClassesContainer>
   );
 }

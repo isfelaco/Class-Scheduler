@@ -45,7 +45,7 @@ export const createClass = (props: ClassObject) => {
     });
 };
 
-export const deleteClass = (id: number, numeric: string) => {
+export const deleteClass = (id: number) => {
   // Send PUT request to 'classes/delete' endpoint
   return axios
     .put("http://localhost:4001/classes/delete", { id: id })
@@ -53,9 +53,7 @@ export const deleteClass = (id: number, numeric: string) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(
-        `There was an error removing the ${numeric} class: ${error}`
-      );
+      console.error(`There was an error removing the class: ${error}`);
       throw new Error(error);
     });
 };
