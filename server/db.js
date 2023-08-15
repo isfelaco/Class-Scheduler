@@ -13,6 +13,10 @@ const knex = require("knex")({
   useNullAsDefault: true,
 });
 
+// reset tables
+// knex.schema.dropTable("classes").then(() => console.log("here"));
+// knex.schema.dropTable("assignments").then(() => console.log("here"));
+
 // Create a table in the database called "classes"
 knex.schema
   // Make sure no "classes" table exists
