@@ -19,6 +19,7 @@ type TableProps = {
 
 export default function Table(props: TableProps) {
   const { headerData, data, onView, onDelete } = props;
+
   return (
     <TableContainer>
       <thead>
@@ -34,10 +35,9 @@ export default function Table(props: TableProps) {
         {data &&
           data.map((item: any) => (
             <tr key={item.id}>
-              {Object.values(item).map((attr: any) => {
-                return <td key={attr}>{attr}</td>;
+              {Object.entries(item).map((attr: any) => {
+                return <td key={attr[0]}>{attr[1]}</td>;
               })}
-
               <td>
                 <button onClick={() => onView(item)}>View</button>
                 <button onClick={() => onDelete(item.id)}>Delete</button>

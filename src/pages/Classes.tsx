@@ -5,7 +5,6 @@ import {
   deleteClass,
   fetchClasses,
   resetClasses,
-  fetchClass,
 } from "../hooks/classHooks";
 import { ClassObject } from "../types";
 import Table from "../components/Table";
@@ -23,10 +22,14 @@ export default function Classes() {
   const [openModal, setModal] = useState(false);
 
   useEffect(() => {
+    updateClasses();
+  }, []);
+
+  function updateClasses() {
     fetchClasses().then((res) => {
       setClasses(res);
     });
-  });
+  }
 
   const navigate = useNavigate();
   const openClass = (c: ClassObject) => {
@@ -54,7 +57,13 @@ export default function Classes() {
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData);
     const c = await createClass(obj);
+    updateClasses();
     openClass(c);
+  };
+
+  const handleDeleteClass = async (id: number) => {
+    await deleteClass(id);
+    updateClasses();
   };
 
   return (
@@ -66,7 +75,7 @@ export default function Classes() {
         headerData={["Numeric", "Professor", "Title"]}
         data={classes}
         onView={openClass}
-        onDelete={deleteClass}
+        onDelete={handleDeleteClass}
       />
       {openModal && (
         <Modal onClose={() => setModal(false)}>

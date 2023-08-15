@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { classAssignments } from "../hooks/assignmentHooks";
 import { AssignmentObject } from "../types";
+import Table from "../components/Table";
 
 export default function Class() {
   let location = useLocation();
@@ -19,6 +20,16 @@ export default function Class() {
       {assignments?.map((a: AssignmentObject) => {
         return <div key={a.id}>{a.title}</div>;
       })}
+      {assignments && assignments.length > 0 ? (
+        <Table
+          headerData={["Class ID", "Title", "Description", "Due Date"]}
+          data={assignments}
+          onView={() => console.log("view assignment")}
+          onDelete={() => console.log("delete assignment")}
+        />
+      ) : (
+        <p>No assignments for this class</p>
+      )}
     </div>
   );
 }

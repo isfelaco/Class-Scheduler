@@ -48,16 +48,14 @@ export const createAssignment = (props: AssignmentObject) => {
     });
 };
 
-export const deleteAssignment = (id: number, title: string) => {
+export const deleteAssignment = (id: number) => {
   return axios
     .put("http://localhost:4001/assignments/delete", { id: id })
     .then((res) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(
-        `There was an error removing the ${title} asignment: ${error}`
-      );
+      console.error(`There was an error removing the asignment: ${error}`);
       throw new Error(error);
     });
 };
