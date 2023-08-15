@@ -10,7 +10,7 @@ router.put("/some", assignmentsRoutes.assignmentsSome);
 
 router.post("/create", assignmentsRoutes.assignmentsCreate);
 
-router.put("/delete", assignmentsRoutes.assignmentsDelete);
+router.delete("/:id", assignmentsRoutes.assignmentsDelete);
 
 router.put("/reset", assignmentsRoutes.assignmentsReset);
 

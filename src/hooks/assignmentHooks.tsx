@@ -50,7 +50,7 @@ export const createAssignment = (props: AssignmentObject) => {
 
 export const deleteAssignment = (id: number) => {
   return axios
-    .put("http://localhost:4001/assignments/delete", { id: id })
+    .delete(`http://localhost:4001/assignments/${id}`)
     .then((res) => {
       return res.data;
     })

@@ -68,7 +68,7 @@ export default function Assignments() {
           <form onSubmit={handleCreateAssignment}>
             <h2>Create Class</h2>
             <label>Class Numeric</label>
-            <input type="text" name="class" />
+            <input type="text" name="classID" />
             <label>Title</label>
             <input type="text" name="title" />
             <label>Description</label>

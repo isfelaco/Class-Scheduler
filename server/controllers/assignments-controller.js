@@ -35,10 +35,13 @@ exports.assignmentsCreate = async (req, res) => {
       description: req.body.description,
       dueDate: req.body.dueDate,
     })
-    .then(() => {
-      res.json({
-        message: `Assignment \'${req.body.title}\' created.`,
-      });
+    .then((insertedAssignment) => {
+      knex("Assignments")
+        .where({ id: insertedAssignment[0] })
+        .first()
+        .then((selectedAssignment) => {
+          return res.json(selectedAssignment);
+        });
     })
     .catch((err) => {
       res.json({
@@ -50,15 +53,15 @@ exports.assignmentsCreate = async (req, res) => {
 exports.assignmentsDelete = async (req, res) => {
   knex("Assignments")
     .del()
-    .where({ id: req.body.id })
+    .where({ id: req.params.id })
     .then(() => {
       res.json({
-        message: `Assignment with id ${req.body.id} deleted.`,
+        message: `Assignment with id ${req.params.id} deleted.`,
       });
     })
     .catch((err) => {
       res.json({
-        message: `There was an error deleting id ${req.body.id} assignment: ${err}`,
+        message: `There was an error deleting id ${req.params.id} assignment: ${err}`,
       });
     });
 };
