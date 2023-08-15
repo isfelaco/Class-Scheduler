@@ -16,7 +16,7 @@ exports.assignmentsAll = async (req, res) => {
 
 exports.assignmentsSome = async (req, res) => {
   knex("Assignments")
-    .where({ classID: req.body.id }) // find correct record based on id
+    .where({ class: req.body.numeric }) // find correct record based on id
     .then((userData) => {
       res.json(userData);
     })
@@ -30,7 +30,7 @@ exports.assignmentsSome = async (req, res) => {
 exports.assignmentsCreate = async (req, res) => {
   knex("Assignments")
     .insert({
-      classID: req.body.classID,
+      class: req.body.class,
       title: req.body.title,
       description: req.body.description,
       dueDate: req.body.dueDate,

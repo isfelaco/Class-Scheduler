@@ -10,19 +10,21 @@ export default function Class() {
 
   const [assignments, setAssignments] = useState<[] | null>(null);
   useEffect(() => {
-    classAssignments(c.id).then((res) => setAssignments(res));
+    classAssignments(c.numeric).then((res) => setAssignments(res));
   });
 
   return (
     <div>
       <h1>{c.title}</h1>
       <p>{c.id}</p>
-      {assignments?.map((a: AssignmentObject) => {
-        return <div key={a.id}>{a.title}</div>;
-      })}
+      {assignments &&
+        assignments.length > 0 &&
+        assignments.map((a: AssignmentObject) => {
+          return <div key={a.id}>{a.title}</div>;
+        })}
       {assignments && assignments.length > 0 ? (
         <Table
-          headerData={["Class ID", "Title", "Description", "Due Date"]}
+          headerData={["Class Numeric", "Title", "Description", "Due Date"]}
           data={assignments}
           onView={() => console.log("view assignment")}
           onDelete={() => console.log("delete assignment")}

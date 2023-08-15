@@ -82,7 +82,7 @@ exports.classesDelete = async (req, res) => {
     .then(() => {
       knex("Assignments")
         .del()
-        .where({ classID: req.params.id })
+        .where({ class: req.params.numeric })
         .then(() => {
           return res.json(
             `Class with id ${req.params.id} and assignments deleted.`

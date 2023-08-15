@@ -24,14 +24,6 @@ export default function Assignments() {
     });
   });
 
-  const newAssignment = {
-    classID: 1,
-    title: "Assignment",
-    description: "My first assignment",
-    dueDate: new Date(),
-  };
-  //   console.log(assignments);
-
   // source: https://www.designcise.com/web/tutorial/how-to-convert-html-form-data-to-javascript-object
   function formDataToObject(formData: any) {
     const normalizeValues = (values: any) =>
@@ -58,7 +50,7 @@ export default function Assignments() {
       <h1>Assignments</h1>
       <button onClick={() => setModal(true)}>Create Assignment</button>
       <Table
-        headerData={["Class ID", "Title", "Description", "Due Date"]}
+        headerData={["Class Numeric", "Title", "Description", "Due Date"]}
         data={assignments}
         onView={() => console.log("view assignment")}
         onDelete={deleteAssignment}
@@ -68,7 +60,7 @@ export default function Assignments() {
           <form onSubmit={handleCreateAssignment}>
             <h2>Create Class</h2>
             <label>Class Numeric</label>
-            <input type="text" name="classID" />
+            <input type="text" name="class" />
             <label>Title</label>
             <input type="text" name="title" />
             <label>Description</label>

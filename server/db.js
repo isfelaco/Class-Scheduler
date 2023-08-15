@@ -27,7 +27,7 @@ knex.schema
       return knex.schema
         .createTable("classes", (table) => {
           table.increments("id").primary();
-          table.string("numeric");
+          table.string("numeric").unique();
           table.string("professor");
           table.string("title");
         })
@@ -63,7 +63,7 @@ knex.schema
       return knex.schema
         .createTable("assignments", (table) => {
           table.increments("id").primary();
-          table.integer("classID");
+          table.string("class").references("numeric").inTable("classes"); // enter class numeric here
           table.string("title");
           table.string("description");
           table.timestamp("dueDate");
