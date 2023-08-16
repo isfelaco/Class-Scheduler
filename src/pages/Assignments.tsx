@@ -21,10 +21,12 @@ export default function Assignments() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetchAssignments().then((res) => {
-      setAssignments(res);
-    });
-  });
+    updateAssignments();
+  }, []);
+
+  function updateAssignments() {
+    fetchAssignments().then((res) => setAssignments(res));
+  }
 
   // source: https://www.designcise.com/web/tutorial/how-to-convert-html-form-data-to-javascript-object
   function formDataToObject(formData: any) {
@@ -54,7 +56,13 @@ export default function Assignments() {
       }
     } else {
       setError("");
+      updateAssignments();
     }
+  };
+
+  const handleDeleteAssignment = async (id: number) => {
+    deleteAssignment(id);
+    updateAssignments();
   };
 
   return (
@@ -66,7 +74,7 @@ export default function Assignments() {
           headerData={["Class Numeric", "Title", "Description", "Due Date"]}
           data={assignments}
           onView={() => console.log("view assignment")}
-          onDelete={deleteAssignment}
+          onDelete={handleDeleteAssignment}
         />
       ) : (
         <h3>No assignments! Click Create Assignment to add one.</h3>
