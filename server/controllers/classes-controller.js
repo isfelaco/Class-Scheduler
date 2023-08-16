@@ -80,14 +80,7 @@ exports.classesDelete = async (req, res) => {
     .del()
     .where({ id: req.params.id }) // find correct record based on id
     .then(() => {
-      knex("Assignments")
-        .del()
-        .where({ class: req.params.numeric })
-        .then(() => {
-          return res.json(
-            `Class with id ${req.params.id} and assignments deleted.`
-          );
-        });
+      res.json(`Class with id ${req.params.id} and assignments deleted.`);
     })
     .catch((err) => {
       // Send a error message in response

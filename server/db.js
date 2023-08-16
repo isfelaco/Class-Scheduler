@@ -17,6 +17,10 @@ const knex = require("knex")({
 // knex.schema.dropTable("classes").then(() => console.log("here"));
 // knex.schema.dropTable("assignments").then(() => console.log("here"));
 
+knex.raw("PRAGMA foreign_keys = ON;").then(() => {
+  console.log("Foreign Key Check activated.");
+});
+
 // Create a table in the database called "classes"
 knex.schema
   // Make sure no "classes" table exists
@@ -67,7 +71,12 @@ knex.schema
       return knex.schema
         .createTable("assignments", (table) => {
           table.increments("id").primary();
-          table.string("class").references("numeric").inTable("classes"); // enter class numeric here
+          table.integer("classId").unsigned().notNullable();
+          table
+            .foreign("classId")
+            .references("id")
+            .inTable("Classes")
+            .onDelete("CASCADE");
           table.string("title");
           table.string("description");
           table.timestamp("dueDate");

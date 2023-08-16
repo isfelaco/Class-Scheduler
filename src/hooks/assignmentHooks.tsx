@@ -15,9 +15,9 @@ export const fetchAssignments = () => {
     });
 };
 
-export const classAssignments = (numeric: string) => {
+export const classAssignments = (id: number) => {
   return axios
-    .put("http://localhost:4001/assignments/some", { numeric: numeric })
+    .put("http://localhost:4001/assignments/some", { id: id })
     .then((res) => {
       return res.data;
     })
@@ -32,7 +32,7 @@ export const classAssignments = (numeric: string) => {
 export const createAssignment = (props: AssignmentObject) => {
   return axios
     .post("http://localhost:4001/assignments/create", {
-      class: props.class,
+      classId: props.classId,
       title: props.title,
       description: props.description,
       dueDate: props.dueDate,

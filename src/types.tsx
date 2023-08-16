@@ -7,7 +7,7 @@ export type ClassObject = {
 
 export type AssignmentObject = {
   id?: number;
-  class: string;
+  classId: number;
   title: string;
   description: string;
   dueDate: Date;

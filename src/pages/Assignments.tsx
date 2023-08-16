@@ -59,8 +59,8 @@ export default function Assignments() {
         <Modal onClose={() => setModal(false)}>
           <form onSubmit={handleCreateAssignment}>
             <h2>Create Class</h2>
-            <label>Class Numeric</label>
-            <input type="text" name="class" />
+            <label>Class ID</label>
+            <input type="number" name="classId" />
             <label>Title</label>
             <input type="text" name="title" />
             <label>Description</label>
