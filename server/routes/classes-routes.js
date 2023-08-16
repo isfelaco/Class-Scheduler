@@ -12,9 +12,9 @@ const router = express.Router();
 // this means that '/all' translates to '/classes/all'
 router.get("/all", classesRoutes.classesAll);
 
-router.get("/:numeric", classesRoutes.classGetByNumeric);
+router.get("/class-by-numeric/:numeric", classesRoutes.classGetByNumeric);
 
-router.get("/:id", classesRoutes.classGetById);
+router.get("/class-by-id/:id", classesRoutes.classGetById);
 
 router.delete("/:id", classesRoutes.classesDelete);
 

@@ -7,6 +7,7 @@ import {
 import Table from "../components/Table";
 import styled from "styled-components";
 import Modal from "../components/Modal";
+import { fetchClassByNumeric } from "../hooks/classHooks";
 
 const AssignmentsContainer = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ const AssignmentsContainer = styled.div`
 export default function Assignments() {
   const [assignments, setAssignments] = useState<[] | null>(null);
   const [openModal, setModal] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchAssignments().then((res) => {
@@ -39,28 +41,42 @@ export default function Assignments() {
     setModal(false);
     e.preventDefault();
     const formData = new FormData(e.target);
-    const obj = formDataToObject(formData);
-    const c = await createAssignment(obj);
-    console.log(c);
-    // openClass(c);
+    const obj = formDataToObject(formData); // normalize data
+    const c = await fetchClassByNumeric(obj.classId); // find class by numeric
+    obj.classId = c.id; // set id to found class
+    const a = await createAssignment(obj); // create assignment with foreign key
+
+    if (a.error) {
+      if (a.error.errno === 19) {
+        setError(
+          "There was an error adding this assignment. Make sure you are adding an assignment to an existing class."
+        );
+      }
+    } else {
+      setError("");
+    }
   };
 
   return (
     <AssignmentsContainer>
       <h1>Assignments</h1>
       <button onClick={() => setModal(true)}>Create Assignment</button>
-      <Table
-        headerData={["Class Numeric", "Title", "Description", "Due Date"]}
-        data={assignments}
-        onView={() => console.log("view assignment")}
-        onDelete={deleteAssignment}
-      />
+      {assignments && assignments.length > 0 ? (
+        <Table
+          headerData={["Class Numeric", "Title", "Description", "Due Date"]}
+          data={assignments}
+          onView={() => console.log("view assignment")}
+          onDelete={deleteAssignment}
+        />
+      ) : (
+        <h3>No assignments! Click Create Assignment to add one.</h3>
+      )}
       {openModal && (
         <Modal onClose={() => setModal(false)}>
           <form onSubmit={handleCreateAssignment}>
             <h2>Create Class</h2>
-            <label>Class ID</label>
-            <input type="number" name="classId" />
+            <label>Class Numeric</label>
+            <input type="string" name="classId" />
             <label>Title</label>
             <input type="text" name="title" />
             <label>Description</label>
@@ -69,6 +85,7 @@ export default function Assignments() {
           </form>
         </Modal>
       )}
+      {error && <h3>{error}</h3>}
     </AssignmentsContainer>
   );
 }

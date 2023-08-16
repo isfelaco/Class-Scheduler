@@ -9,7 +9,8 @@ exports.assignmentsAll = async (req, res) => {
     })
     .catch((err) => {
       res.json({
-        message: `There was an error retrieving assignments: ${err}`,
+        message: `There was an error retrieving assignments`,
+        error: err,
       });
     });
 };
@@ -22,7 +23,8 @@ exports.assignmentsSome = async (req, res) => {
     })
     .catch((err) => {
       res.json({
-        message: `There was an error retrieving assignments: ${err}`,
+        message: `There was an error retrieving assignments`,
+        error: err,
       });
     });
 };
@@ -45,7 +47,8 @@ exports.assignmentsCreate = async (req, res) => {
     })
     .catch((err) => {
       res.json({
-        message: `There was an error creating ${req.body.title} assignment: ${err}`,
+        message: `There was an error creating ${req.body.title} assignment`,
+        error: err,
       });
     });
 };
@@ -61,7 +64,8 @@ exports.assignmentsDelete = async (req, res) => {
     })
     .catch((err) => {
       res.json({
-        message: `There was an error deleting id ${req.params.id} assignment: ${err}`,
+        message: `There was an error deleting id ${req.params.id} assignment`,
+        error: err,
       });
     });
 };
@@ -76,7 +80,8 @@ exports.assignmentsReset = async (req, res) => {
     })
     .catch((err) => {
       res.json({
-        message: `There was an error resetting assignment list: ${err}.`,
+        message: `There was an error resetting assignment list`,
+        error: err,
       });
     });
 };

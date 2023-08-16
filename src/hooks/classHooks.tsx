@@ -16,7 +16,7 @@ export const fetchClasses = async () => {
 
 export const fetchClassByNumeric = async (numeric: string) => {
   return await axios
-    .get(`http://localhost:4001/classes/${numeric}`)
+    .get(`http://localhost:4001/classes/class-by-numeric/${numeric}`)
     .then((res) => {
       return res.data;
     })
@@ -28,7 +28,7 @@ export const fetchClassByNumeric = async (numeric: string) => {
 
 export const fetchClassById = async (id: number) => {
   return await axios
-    .get(`http://localhost:4001/classes/${id}`)
+    .get(`http://localhost:4001/classes/class-by-id/${id}`)
     .then((res) => {
       return res.data;
     })
