@@ -71,10 +71,10 @@ knex.schema
       return knex.schema
         .createTable("assignments", (table) => {
           table.increments("id").primary();
-          table.integer("classId").unsigned().notNullable();
+          table.string("class_numeric").unsigned().notNullable();
           table
-            .foreign("classId")
-            .references("id")
+            .foreign("class_numeric")
+            .references("numeric")
             .inTable("Classes")
             .onDelete("CASCADE");
           table.string("title");

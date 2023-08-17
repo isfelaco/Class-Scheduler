@@ -10,7 +10,7 @@ export default function Class() {
 
   const [assignments, setAssignments] = useState<[] | null>(null);
   useEffect(() => {
-    classAssignments(c.id).then((res) => setAssignments(res));
+    classAssignments(c.numeric).then((res) => setAssignments(res));
   });
 
   return (

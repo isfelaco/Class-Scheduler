@@ -44,8 +44,6 @@ export default function Assignments() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData); // normalize data
-    const c = await fetchClassByNumeric(obj.classId); // find class by numeric
-    obj.classId = c.id; // set id to found class
     const a = await createAssignment(obj); // create assignment with foreign key
 
     if (a.error) {
@@ -84,7 +82,7 @@ export default function Assignments() {
           <form onSubmit={handleCreateAssignment}>
             <h2>Create Class</h2>
             <label>Class Numeric</label>
-            <input type="string" name="classId" />
+            <input type="string" name="class_numeric" />
             <label>Title</label>
             <input type="text" name="title" />
             <label>Description</label>
