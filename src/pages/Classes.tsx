@@ -66,11 +66,16 @@ export default function Classes() {
     updateClasses();
   };
 
+  const handleResetClasses = async () => {
+    await resetClasses();
+    updateClasses();
+  };
+
   return (
     <ClassesContainer>
       <h1>My Classes</h1>
       <button onClick={() => setModal(true)}>Add a Class</button>
-      <button onClick={resetClasses}>Reset All Classes</button>
+      <button onClick={handleResetClasses}>Reset All Classes</button>
       <Table
         headerData={["Numeric", "Professor", "Title"]}
         data={classes}

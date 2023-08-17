@@ -3,6 +3,7 @@ import {
   createAssignment,
   deleteAssignment,
   fetchAssignments,
+  resetAssignments,
 } from "../hooks/assignmentHooks";
 import Table from "../components/Table";
 import styled from "styled-components";
@@ -63,10 +64,16 @@ export default function Assignments() {
     updateAssignments();
   };
 
+  const handleResetAssignments = async () => {
+    await resetAssignments();
+    updateAssignments();
+  };
+
   return (
     <AssignmentsContainer>
       <h1>Assignments</h1>
       <button onClick={() => setModal(true)}>Create Assignment</button>
+      <button onClick={handleResetAssignments}>Reset All Assignments</button>
       {assignments && assignments.length > 0 ? (
         <Table
           headerData={["Class Numeric", "Title", "Description", "Due Date"]}
