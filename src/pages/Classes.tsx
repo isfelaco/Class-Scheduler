@@ -61,8 +61,8 @@ export default function Classes() {
     openClass(c);
   };
 
-  const handleDeleteClass = async (id: number) => {
-    await deleteClass(id);
+  const handleDeleteClass = async (c: ClassObject) => {
+    await deleteClass(c.id || 0); // temporary
     updateClasses();
   };
 
@@ -79,8 +79,10 @@ export default function Classes() {
       <Table
         headerData={["Numeric", "Professor", "Title"]}
         data={classes}
-        onView={openClass}
-        onDelete={handleDeleteClass}
+        button1Text="View"
+        button1Action={openClass}
+        button2Text="Delete"
+        button2Action={handleDeleteClass}
       />
       {openModal && (
         <Modal onClose={() => setModal(false)}>

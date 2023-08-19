@@ -17,7 +17,7 @@ exports.assignmentsAll = async (req, res) => {
 
 exports.assignmentsSome = async (req, res) => {
   knex("Assignments")
-    .where({ class_numeric: req.body.numeric }) // find correct record based on id
+    .where({ class_numeric: req.body.numeric })
     .then((userData) => {
       res.json(userData);
     })

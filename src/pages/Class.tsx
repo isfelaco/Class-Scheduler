@@ -11,23 +11,20 @@ export default function Class() {
   const [assignments, setAssignments] = useState<[] | null>(null);
   useEffect(() => {
     classAssignments(c.numeric).then((res) => setAssignments(res));
-  });
+  }, []);
 
   return (
     <div>
       <h1>{c.title}</h1>
       <p>{c.id}</p>
-      {assignments &&
-        assignments.length > 0 &&
-        assignments.map((a: AssignmentObject) => {
-          return <div key={a.id}>{a.title}</div>;
-        })}
       {assignments && assignments.length > 0 ? (
         <Table
           headerData={["Class Numeric", "Title", "Description", "Due Date"]}
           data={assignments}
-          onView={() => console.log("view assignment")}
-          onDelete={() => console.log("delete assignment")}
+          button1Text="View"
+          button1Action={() => console.log("view assignment")}
+          button2Text="Delete"
+          button2Action={() => console.log("delete assignment")}
         />
       ) : (
         <p>No assignments for this class</p>

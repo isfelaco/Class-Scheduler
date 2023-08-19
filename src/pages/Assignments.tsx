@@ -9,6 +9,7 @@ import Table from "../components/Table";
 import styled from "styled-components";
 import Modal from "../components/Modal";
 import { fetchClassByNumeric } from "../hooks/classHooks";
+import { AssignmentObject } from "../types";
 
 const AssignmentsContainer = styled.div`
   display: flex;
@@ -59,8 +60,8 @@ export default function Assignments() {
     }
   };
 
-  const handleDeleteAssignment = async (id: number) => {
-    deleteAssignment(id);
+  const handleDeleteAssignment = async (a: AssignmentObject) => {
+    await deleteAssignment(a.id || 0); // temporary
     updateAssignments();
   };
 
@@ -78,8 +79,10 @@ export default function Assignments() {
         <Table
           headerData={["Class Numeric", "Title", "Description", "Due Date"]}
           data={assignments}
-          onView={() => console.log("view assignment")}
-          onDelete={handleDeleteAssignment}
+          button1Text="idk"
+          button1Action={() => console.log("idk")}
+          button2Text="Delete"
+          button2Action={handleDeleteAssignment}
         />
       ) : (
         <h3>No assignments! Click Create Assignment to add one.</h3>
@@ -94,6 +97,8 @@ export default function Assignments() {
             <input type="text" name="title" />
             <label>Description</label>
             <input type="text" name="description" />
+            <label>Due Date</label>
+            <input type="date" name="dueDate" />
             <input type="submit" value="Create Assignment" />
           </form>
         </Modal>
