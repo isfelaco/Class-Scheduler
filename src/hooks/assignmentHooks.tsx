@@ -15,9 +15,9 @@ export const fetchAssignments = () => {
     });
 };
 
-export const classAssignments = (id: number) => {
+export const classAssignments = (numeric: string) => {
   return axios
-    .put("http://localhost:4001/assignments/some", { id: id })
+    .put("http://localhost:4001/assignments/some", { numeric: numeric })
     .then((res) => {
       return res.data;
     })
@@ -32,7 +32,7 @@ export const classAssignments = (id: number) => {
 export const createAssignment = (props: AssignmentObject) => {
   return axios
     .post("http://localhost:4001/assignments/create", {
-      classID: props.classID,
+      class_numeric: props.class_numeric,
       title: props.title,
       description: props.description,
       dueDate: props.dueDate,
@@ -48,16 +48,14 @@ export const createAssignment = (props: AssignmentObject) => {
     });
 };
 
-export const deleteAssignment = (id: number, title: string) => {
+export const deleteAssignment = (id: number) => {
   return axios
-    .put("http://localhost:4001/assignments/delete", { id: id })
+    .delete(`http://localhost:4001/assignments/${id}`)
     .then((res) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(
-        `There was an error removing the ${title} asignment: ${error}`
-      );
+      console.error(`There was an error removing the asignment: ${error}`);
       throw new Error(error);
     });
 };

@@ -9,20 +9,22 @@ exports.assignmentsAll = async (req, res) => {
     })
     .catch((err) => {
       res.json({
-        message: `There was an error retrieving assignments: ${err}`,
+        message: `There was an error retrieving assignments`,
+        error: err,
       });
     });
 };
 
 exports.assignmentsSome = async (req, res) => {
   knex("Assignments")
-    .where({ classID: req.body.id }) // find correct record based on id
+    .where({ class_numeric: req.body.numeric })
     .then((userData) => {
       res.json(userData);
     })
     .catch((err) => {
       res.json({
-        message: `There was an error retrieving assignments: ${err}`,
+        message: `There was an error retrieving assignments`,
+        error: err,
       });
     });
 };
@@ -30,19 +32,23 @@ exports.assignmentsSome = async (req, res) => {
 exports.assignmentsCreate = async (req, res) => {
   knex("Assignments")
     .insert({
-      classID: req.body.classID,
+      class_numeric: req.body.class_numeric,
       title: req.body.title,
       description: req.body.description,
       dueDate: req.body.dueDate,
     })
-    .then(() => {
-      res.json({
-        message: `Assignment \'${req.body.title}\' created.`,
-      });
+    .then((insertedAssignment) => {
+      knex("Assignments")
+        .where({ id: insertedAssignment[0] })
+        .first()
+        .then((selectedAssignment) => {
+          return res.json(selectedAssignment);
+        });
     })
     .catch((err) => {
       res.json({
-        message: `There was an error creating ${req.body.title} assignment: ${err}`,
+        message: `There was an error creating ${req.body.title} assignment`,
+        error: err,
       });
     });
 };
@@ -50,15 +56,16 @@ exports.assignmentsCreate = async (req, res) => {
 exports.assignmentsDelete = async (req, res) => {
   knex("Assignments")
     .del()
-    .where({ id: req.body.id })
+    .where({ id: req.params.id })
     .then(() => {
       res.json({
-        message: `Assignment with id ${req.body.id} deleted.`,
+        message: `Assignment with id ${req.params.id} deleted.`,
       });
     })
     .catch((err) => {
       res.json({
-        message: `There was an error deleting id ${req.body.id} assignment: ${err}`,
+        message: `There was an error deleting id ${req.params.id} assignment`,
+        error: err,
       });
     });
 };
@@ -73,7 +80,8 @@ exports.assignmentsReset = async (req, res) => {
     })
     .catch((err) => {
       res.json({
-        message: `There was an error resetting assignment list: ${err}.`,
+        message: `There was an error resetting assignment list`,
+        error: err,
       });
     });
 };

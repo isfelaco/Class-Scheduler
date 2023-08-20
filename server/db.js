@@ -13,6 +13,14 @@ const knex = require("knex")({
   useNullAsDefault: true,
 });
 
+// reset tables
+// knex.schema.dropTable("classes").then(() => console.log("here"));
+// knex.schema.dropTable("assignments").then(() => console.log("here"));
+
+knex.raw("PRAGMA foreign_keys = ON;").then(() => {
+  console.log("Foreign Key Check activated.");
+});
+
 // Create a table in the database called "classes"
 knex.schema
   // Make sure no "classes" table exists
@@ -27,7 +35,7 @@ knex.schema
       return knex.schema
         .createTable("classes", (table) => {
           table.increments("id").primary();
-          table.string("numeric");
+          table.string("numeric").unique();
           table.string("professor");
           table.string("title");
         })
@@ -63,7 +71,12 @@ knex.schema
       return knex.schema
         .createTable("assignments", (table) => {
           table.increments("id").primary();
-          table.integer("classID");
+          table.string("class_numeric").unsigned().notNullable();
+          table
+            .foreign("class_numeric")
+            .references("numeric")
+            .inTable("Classes")
+            .onDelete("CASCADE");
           table.string("title");
           table.string("description");
           table.timestamp("dueDate");

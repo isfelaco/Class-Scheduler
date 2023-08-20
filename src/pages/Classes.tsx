@@ -5,7 +5,6 @@ import {
   deleteClass,
   fetchClasses,
   resetClasses,
-  fetchClass,
 } from "../hooks/classHooks";
 import { ClassObject } from "../types";
 import Table from "../components/Table";
@@ -23,10 +22,14 @@ export default function Classes() {
   const [openModal, setModal] = useState(false);
 
   useEffect(() => {
+    updateClasses();
+  }, []);
+
+  function updateClasses() {
     fetchClasses().then((res) => {
       setClasses(res);
     });
-  });
+  }
 
   const navigate = useNavigate();
   const openClass = (c: ClassObject) => {
@@ -54,19 +57,32 @@ export default function Classes() {
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData);
     const c = await createClass(obj);
+    updateClasses();
     openClass(c);
+  };
+
+  const handleDeleteClass = async (c: ClassObject) => {
+    await deleteClass(c.id || 0); // temporary
+    updateClasses();
+  };
+
+  const handleResetClasses = async () => {
+    await resetClasses();
+    updateClasses();
   };
 
   return (
     <ClassesContainer>
       <h1>My Classes</h1>
       <button onClick={() => setModal(true)}>Add a Class</button>
-      <button onClick={resetClasses}>Reset All Classes</button>
+      <button onClick={handleResetClasses}>Reset All Classes</button>
       <Table
         headerData={["Numeric", "Professor", "Title"]}
         data={classes}
-        onView={openClass}
-        onDelete={deleteClass}
+        button1Text="View"
+        button1Action={openClass}
+        button2Text="Delete"
+        button2Action={handleDeleteClass}
       />
       {openModal && (
         <Modal onClose={() => setModal(false)}>

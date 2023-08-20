@@ -1,9 +1,9 @@
 import axios from "axios";
 import { ClassObject } from "../types";
 
-export const fetchClasses = () => {
+export const fetchClasses = async () => {
   // Send GET request to 'classes/all' endpoint
-  return axios
+  return await axios
     .get("http://localhost:4001/classes/all")
     .then((res) => {
       return res.data;
@@ -14,9 +14,21 @@ export const fetchClasses = () => {
     });
 };
 
-export const fetchClass = (numeric: string) => {
-  return axios
-    .put("http://localhost:4001/classes/get", { numeric: numeric })
+export const fetchClassByNumeric = async (numeric: string) => {
+  return await axios
+    .get(`http://localhost:4001/classes/class-by-numeric/${numeric}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(`There was an error retrieving the class: ${error}`);
+      throw new Error(error);
+    });
+};
+
+export const fetchClassById = async (id: number) => {
+  return await axios
+    .get(`http://localhost:4001/classes/class-by-id/${id}`)
     .then((res) => {
       return res.data;
     })
@@ -48,7 +60,7 @@ export const createClass = (props: ClassObject) => {
 export const deleteClass = (id: number) => {
   // Send PUT request to 'classes/delete' endpoint
   return axios
-    .put("http://localhost:4001/classes/delete", { id: id })
+    .delete(`http://localhost:4001/classes/${id}`)
     .then((res) => {
       return res.data;
     })

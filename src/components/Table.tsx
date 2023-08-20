@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import styled from "styled-components";
 
 const TableContainer = styled.table`
@@ -13,12 +13,22 @@ const TableContainer = styled.table`
 type TableProps = {
   headerData: string[];
   data: any[] | null;
-  onView: (obj: any) => void;
-  onDelete: (obj: any) => void;
+  button1Text: string;
+  button2Text: string;
+  button1Action: (obj: any) => void;
+  button2Action: (obj: any) => void;
 };
 
 export default function Table(props: TableProps) {
-  const { headerData, data, onView, onDelete } = props;
+  const {
+    headerData,
+    data,
+    button1Text,
+    button2Text,
+    button1Action,
+    button2Action,
+  } = props;
+
   return (
     <TableContainer>
       <thead>
@@ -27,20 +37,23 @@ export default function Table(props: TableProps) {
           {headerData.map((hd) => (
             <th key={hd}>{hd}</th>
           ))}
-          <th>Actions</th>
+          {<th>Actions</th>}
         </tr>
       </thead>
       <tbody>
         {data &&
           data.map((item: any) => (
             <tr key={item.id}>
-              {Object.values(item).map((attr: any) => {
-                return <td key={attr}>{attr}</td>;
+              {Object.entries(item).map((attr: any) => {
+                return <td key={attr[0]}>{attr[1]}</td>;
               })}
-
               <td>
-                <button onClick={() => onView(item)}>View</button>
-                <button onClick={() => onDelete(item.id)}>Delete</button>
+                <button onClick={() => button1Action(item)}>
+                  {button1Text}
+                </button>
+                <button onClick={() => button2Action(item)}>
+                  {button2Text}
+                </button>
               </td>
             </tr>
           ))}

@@ -7,9 +7,9 @@ exports.classesAll = async (req, res) => {
   knex
     .select("*") // select all records
     .from("classes") // from 'classes' table
-    .then((userData) => {
+    .then((data) => {
       // Send classes extracted from database in response
-      res.json(userData);
+      res.json(data);
     })
     .catch((err) => {
       // Send a error message in response
@@ -17,14 +17,29 @@ exports.classesAll = async (req, res) => {
     });
 };
 
-exports.classGet = async (req, res) => {
+exports.classGetByNumeric = async (req, res) => {
   // Get all classes from database
   knex("Classes")
-    .where({ numeric: req.body.numeric }) // find correct record based on id
+    .where({ numeric: req.params.numeric }) // find correct record based on id
     .first()
-    .then((userData) => {
+    .then((data) => {
       // Send classes extracted from database in response
-      res.json(userData);
+      res.json(data);
+    })
+    .catch((err) => {
+      // Send a error message in response
+      res.json({ message: `There was an error retrieving the class: ${err}` });
+    });
+};
+
+exports.classGetById = async (req, res) => {
+  // Get all classes from database
+  knex("Classes")
+    .where({ id: req.params.id }) // find correct record based on id
+    .first()
+    .then((data) => {
+      // Send classes extracted from database in response
+      res.json(data);
     })
     .catch((err) => {
       // Send a error message in response
@@ -63,17 +78,14 @@ exports.classesDelete = async (req, res) => {
   // Find specific class in the database and remove it
   knex("Classes")
     .del()
-    .where({ id: req.body.id }) // find correct record based on id
+    .where({ id: req.params.id }) // find correct record based on id
     .then(() => {
-      // Send a success message in response
-      res.json({
-        message: `Class with id ${req.body.id} deleted.`,
-      });
+      res.json(`Class with id ${req.params.id} and assignments deleted.`);
     })
     .catch((err) => {
       // Send a error message in response
       res.json({
-        message: `There was an error deleting id ${req.body.id} class: ${err}`,
+        message: `There was an error deleting id ${req.params.id} class: ${err}`,
       });
     });
 };
