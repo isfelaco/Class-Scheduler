@@ -10,6 +10,7 @@ import styled from "styled-components";
 import Modal from "../components/Modal";
 import { fetchClassByNumeric } from "../hooks/classHooks";
 import { AssignmentObject } from "../types";
+import Page from "../components/Page";
 
 const AssignmentsContainer = styled.div`
   display: flex;
@@ -71,8 +72,7 @@ export default function Assignments() {
   };
 
   return (
-    <AssignmentsContainer>
-      <h1>Assignments</h1>
+    <Page header="Assignments">
       <button onClick={() => setModal(true)}>Create Assignment</button>
       <button onClick={handleResetAssignments}>Reset All Assignments</button>
       {assignments && assignments.length > 0 ? (
@@ -104,6 +104,6 @@ export default function Assignments() {
         </Modal>
       )}
       {error && <h3>{error}</h3>}
-    </AssignmentsContainer>
+    </Page>
   );
 }

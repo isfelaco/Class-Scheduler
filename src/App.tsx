@@ -9,8 +9,8 @@ import styled from "styled-components";
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: pink;
-  min-height: 100vh;
+  background-color: #96c8ee;
+  height: 100vh;
 `;
 
 export const pages: { [id: string]: ReactElement } = {

@@ -10,12 +10,7 @@ import { ClassObject } from "../types";
 import Table from "../components/Table";
 import styled from "styled-components";
 import Modal from "../components/Modal";
-
-const ClassesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import Page from "../components/Page";
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
@@ -72,8 +67,7 @@ export default function Classes() {
   };
 
   return (
-    <ClassesContainer>
-      <h1>My Classes</h1>
+    <Page header="Classes">
       <button onClick={() => setModal(true)}>Add a Class</button>
       <button onClick={handleResetClasses}>Reset All Classes</button>
       <Table
@@ -98,6 +92,6 @@ export default function Classes() {
           </form>
         </Modal>
       )}
-    </ClassesContainer>
+    </Page>
   );
 }
