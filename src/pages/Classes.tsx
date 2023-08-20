@@ -73,14 +73,18 @@ export default function Classes() {
         <Button onClick={() => setModal(true)}>Add a Class</Button>
         <Button onClick={handleResetClasses}>Reset All Classes</Button>
       </ButtonRow>
-      <Table
-        headerData={["Numeric", "Professor", "Title"]}
-        data={classes}
-        button1Text="View"
-        button1Action={openClass}
-        button2Text="Delete"
-        button2Action={handleDeleteClass}
-      />
+      {classes && classes.length > 0 ? (
+        <Table
+          headerData={["Numeric", "Professor", "Title"]}
+          data={classes}
+          button1Text="View"
+          button1Action={openClass}
+          button2Text="Delete"
+          button2Action={handleDeleteClass}
+        />
+      ) : (
+        <h3>No classes! Click Add a Class to create one.</h3>
+      )}
       {openModal && (
         <Modal onClose={() => setModal(false)}>
           <form onSubmit={handleCreateClass}>
