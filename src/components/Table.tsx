@@ -1,13 +1,30 @@
 import React, { ReactElement } from "react";
 import styled from "styled-components";
+import { Button, ButtonRow } from "./Button";
 
 const TableContainer = styled.table`
-  border: 1px solid black;
+  border: 1px solid #ff6b35;
+  border-radius: 3px;
+  background-color: #f7c59f;
   padding: 20px;
+  width: 100%;
   td {
     border: 1px solid gray;
     padding: 10px;
+    text-align: center;
   }
+  .actions {
+    display: flex;
+    justify-content: center;
+  }
+  tr:nth-child(even) {
+    background-color: #ffb277;
+  }
+`;
+
+const TableHeader = styled.thead`
+  color: white;
+  background-color: #ff6b35;
 `;
 
 type TableProps = {
@@ -31,7 +48,7 @@ export default function Table(props: TableProps) {
 
   return (
     <TableContainer>
-      <thead>
+      <TableHeader>
         <tr>
           <th>#</th>
           {headerData.map((hd) => (
@@ -39,7 +56,7 @@ export default function Table(props: TableProps) {
           ))}
           {<th>Actions</th>}
         </tr>
-      </thead>
+      </TableHeader>
       <tbody>
         {data &&
           data.map((item: any) => (
@@ -47,13 +64,15 @@ export default function Table(props: TableProps) {
               {Object.entries(item).map((attr: any) => {
                 return <td key={attr[0]}>{attr[1]}</td>;
               })}
-              <td>
-                <button onClick={() => button1Action(item)}>
-                  {button1Text}
-                </button>
-                <button onClick={() => button2Action(item)}>
-                  {button2Text}
-                </button>
+              <td className="actions">
+                <ButtonRow>
+                  <Button onClick={() => button1Action(item)}>
+                    {button1Text}
+                  </Button>
+                  <Button onClick={() => button2Action(item)}>
+                    {button2Text}
+                  </Button>
+                </ButtonRow>
               </td>
             </tr>
           ))}

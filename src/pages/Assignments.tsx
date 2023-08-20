@@ -10,12 +10,9 @@ import styled from "styled-components";
 import Modal from "../components/Modal";
 import { fetchClassByNumeric } from "../hooks/classHooks";
 import { AssignmentObject } from "../types";
-
-const AssignmentsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import Page from "../components/Page";
+import { Button, ButtonRow } from "../components/Button";
+import Form from "../components/Form";
 
 export default function Assignments() {
   const [assignments, setAssignments] = useState<[] | null>(null);
@@ -71,10 +68,11 @@ export default function Assignments() {
   };
 
   return (
-    <AssignmentsContainer>
-      <h1>Assignments</h1>
-      <button onClick={() => setModal(true)}>Create Assignment</button>
-      <button onClick={handleResetAssignments}>Reset All Assignments</button>
+    <Page header="Assignments">
+      <ButtonRow>
+        <Button onClick={() => setModal(true)}>Create Assignment</Button>
+        <Button onClick={handleResetAssignments}>Reset All Assignments</Button>
+      </ButtonRow>
       {assignments && assignments.length > 0 ? (
         <Table
           headerData={["Class Numeric", "Title", "Description", "Due Date"]}
@@ -89,7 +87,7 @@ export default function Assignments() {
       )}
       {openModal && (
         <Modal onClose={() => setModal(false)}>
-          <form onSubmit={handleCreateAssignment}>
+          <Form onSubmit={handleCreateAssignment}>
             <h2>Create Class</h2>
             <label>Class Numeric</label>
             <input type="string" name="class_numeric" />
@@ -99,11 +97,11 @@ export default function Assignments() {
             <input type="text" name="description" />
             <label>Due Date</label>
             <input type="date" name="dueDate" />
-            <input type="submit" value="Create Assignment" />
-          </form>
+            <input type="submit" value="Create Assignment" className="submit" />
+          </Form>
         </Modal>
       )}
       {error && <h3>{error}</h3>}
-    </AssignmentsContainer>
+    </Page>
   );
 }

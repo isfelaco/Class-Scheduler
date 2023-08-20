@@ -10,12 +10,9 @@ import { ClassObject } from "../types";
 import Table from "../components/Table";
 import styled from "styled-components";
 import Modal from "../components/Modal";
-
-const ClassesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import Page from "../components/Page";
+import { Button, ButtonRow } from "../components/Button";
+import Form from "../components/Form";
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
@@ -72,21 +69,26 @@ export default function Classes() {
   };
 
   return (
-    <ClassesContainer>
-      <h1>My Classes</h1>
-      <button onClick={() => setModal(true)}>Add a Class</button>
-      <button onClick={handleResetClasses}>Reset All Classes</button>
-      <Table
-        headerData={["Numeric", "Professor", "Title"]}
-        data={classes}
-        button1Text="View"
-        button1Action={openClass}
-        button2Text="Delete"
-        button2Action={handleDeleteClass}
-      />
+    <Page header="Classes">
+      <ButtonRow>
+        <Button onClick={() => setModal(true)}>Add a Class</Button>
+        <Button onClick={handleResetClasses}>Reset All Classes</Button>
+      </ButtonRow>
+      {classes && classes.length > 0 ? (
+        <Table
+          headerData={["Numeric", "Professor", "Title"]}
+          data={classes}
+          button1Text="View"
+          button1Action={openClass}
+          button2Text="Delete"
+          button2Action={handleDeleteClass}
+        />
+      ) : (
+        <h3>No classes! Click Add a Class to create one.</h3>
+      )}
       {openModal && (
         <Modal onClose={() => setModal(false)}>
-          <form onSubmit={handleCreateClass}>
+          <Form onSubmit={handleCreateClass}>
             <h2>Create Class</h2>
             <label>Numeric</label>
             <input type="text" name="numeric" />
@@ -94,10 +96,10 @@ export default function Classes() {
             <input type="text" name="title" />
             <label>Professor</label>
             <input type="text" name="professor" />
-            <input type="submit" value="Create" />
-          </form>
+            <input type="submit" value="Create" className="submit" />
+          </Form>
         </Modal>
       )}
-    </ClassesContainer>
+    </Page>
   );
 }

@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { classAssignments } from "../hooks/assignmentHooks";
 import { AssignmentObject } from "../types";
 import Table from "../components/Table";
+import Page from "../components/Page";
 
 export default function Class() {
   let location = useLocation();
@@ -14,9 +15,7 @@ export default function Class() {
   }, []);
 
   return (
-    <div>
-      <h1>{c.title}</h1>
-      <p>{c.id}</p>
+    <Page header={c.title}>
       {assignments && assignments.length > 0 ? (
         <Table
           headerData={["Class Numeric", "Title", "Description", "Due Date"]}
@@ -29,6 +28,6 @@ export default function Class() {
       ) : (
         <p>No assignments for this class</p>
       )}
-    </div>
+    </Page>
   );
 }

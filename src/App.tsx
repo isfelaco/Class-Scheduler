@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Classes from "./pages/Classes";
@@ -9,8 +10,8 @@ import styled from "styled-components";
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: pink;
-  min-height: 100vh;
+  background-color: #96c8ee;
+  height: 100vh;
 `;
 
 export const pages: { [id: string]: ReactElement } = {
@@ -22,7 +23,7 @@ export const pages: { [id: string]: ReactElement } = {
 
 export default function App() {
   return (
-    <AppContainer>
+    <AppContainer className="App">
       <BrowserRouter>
         <Routes>
           {Object.entries(pages).map(([route, element], i) => (

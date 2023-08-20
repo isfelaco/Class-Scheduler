@@ -1,0 +1,8 @@
+@font-face {
+  font-family: myFont;
+  src: url(RobotoSlab-VariableFont_wght.ttf);
+}
+
+.App {
+  font-family: myFont;
+}
