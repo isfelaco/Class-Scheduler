@@ -12,6 +12,7 @@ import { fetchClassByNumeric } from "../hooks/classHooks";
 import { AssignmentObject } from "../types";
 import Page from "../components/Page";
 import { Button, ButtonRow } from "../components/Button";
+import Form from "../components/Form";
 
 export default function Assignments() {
   const [assignments, setAssignments] = useState<[] | null>(null);
@@ -86,7 +87,7 @@ export default function Assignments() {
       )}
       {openModal && (
         <Modal onClose={() => setModal(false)}>
-          <form onSubmit={handleCreateAssignment}>
+          <Form onSubmit={handleCreateAssignment}>
             <h2>Create Class</h2>
             <label>Class Numeric</label>
             <input type="string" name="class_numeric" />
@@ -96,8 +97,8 @@ export default function Assignments() {
             <input type="text" name="description" />
             <label>Due Date</label>
             <input type="date" name="dueDate" />
-            <input type="submit" value="Create Assignment" />
-          </form>
+            <input type="submit" value="Create Assignment" className="submit" />
+          </Form>
         </Modal>
       )}
       {error && <h3>{error}</h3>}

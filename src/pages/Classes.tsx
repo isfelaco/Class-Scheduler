@@ -12,6 +12,7 @@ import styled from "styled-components";
 import Modal from "../components/Modal";
 import Page from "../components/Page";
 import { Button, ButtonRow } from "../components/Button";
+import Form from "../components/Form";
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
@@ -87,7 +88,7 @@ export default function Classes() {
       )}
       {openModal && (
         <Modal onClose={() => setModal(false)}>
-          <form onSubmit={handleCreateClass}>
+          <Form onSubmit={handleCreateClass}>
             <h2>Create Class</h2>
             <label>Numeric</label>
             <input type="text" name="numeric" />
@@ -95,8 +96,8 @@ export default function Classes() {
             <input type="text" name="title" />
             <label>Professor</label>
             <input type="text" name="professor" />
-            <input type="submit" value="Create" />
-          </form>
+            <input type="submit" value="Create" className="submit" />
+          </Form>
         </Modal>
       )}
     </Page>
