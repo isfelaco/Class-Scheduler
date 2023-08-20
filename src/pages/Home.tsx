@@ -75,7 +75,9 @@ export default function Home() {
       </i>
       {user && (
         <ButtonRow>
-          <LinkedButton link={`/${user}/my-classes`}>View Classes</LinkedButton>
+          <LinkedButton link={`/${user}/my-classes`} state={user}>
+            View Classes
+          </LinkedButton>
           <LinkedButton link={`/${user}/my-assignments`}>
             View Assignments
           </LinkedButton>

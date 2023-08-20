@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   createClass,
   deleteClass,
-  fetchClasses,
   resetClasses,
+  fetchClassesByUser,
 } from "../hooks/classHooks";
 import { ClassObject } from "../types";
 import Table from "../components/Table";
@@ -16,20 +16,22 @@ import Form from "../components/Form";
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
   const [openModal, setModal] = useState(false);
+  const [error, setError] = useState("");
+
+  let location = useLocation();
+  const user = location.state;
 
   useEffect(() => {
     updateClasses();
   }, []);
 
   function updateClasses() {
-    fetchClasses().then((res) => {
-      setClasses(res);
-    });
+    fetchClassesByUser(user).then((res) => setClasses(res));
   }
 
   const navigate = useNavigate();
   const openClass = (c: ClassObject) => {
-    navigate(`/my-classes/${c.numeric}`, {
+    navigate(`${user}/my-classes/${c.numeric}`, {
       state: {
         class: c,
       },
@@ -58,8 +60,10 @@ export default function Classes() {
   };
 
   const handleDeleteClass = async (c: ClassObject) => {
-    await deleteClass(c.id || 0); // temporary
-    updateClasses();
+    if (c.id) {
+      await deleteClass(c.id);
+      updateClasses();
+    } else setError("There was an error deleting this class");
   };
 
   const handleResetClasses = async () => {
@@ -85,6 +89,7 @@ export default function Classes() {
       ) : (
         <h3>No classes! Click Add a Class to create one.</h3>
       )}
+      {error && <i>{error}</i>}
       {openModal && (
         <Modal onClose={() => setModal(false)}>
           <Form onSubmit={handleCreateClass}>
@@ -95,7 +100,7 @@ export default function Classes() {
             <input type="text" name="title" />
             <label>Professor</label>
             <input type="text" name="professor" />
-            <input type="hidden" name="user_id" value="1" />
+            <input type="hidden" name="user" value={user} />
             <input type="submit" value="Create" className="submit" />
           </Form>
         </Modal>

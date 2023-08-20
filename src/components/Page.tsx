@@ -27,15 +27,20 @@ type PageProps = {
 
 export default function Page(props: PageProps) {
   const { header, children } = props;
+  const user = localStorage.getItem("username");
   return (
     <Container>
       <Header>
         <LinkedButton link="/">Home</LinkedButton>
         <h1>{header}</h1>
         {header === "Classes" ? (
-          <LinkedButton link="/my-assignments">Assignments</LinkedButton>
+          <LinkedButton link={`/${user}/my-assignments`} state={user}>
+            Assignments
+          </LinkedButton>
         ) : (
-          <LinkedButton link="/my-classes">Classes</LinkedButton>
+          <LinkedButton link={`/${user}/my-classes`} state={user}>
+            Classes
+          </LinkedButton>
         )}
       </Header>
       {children}

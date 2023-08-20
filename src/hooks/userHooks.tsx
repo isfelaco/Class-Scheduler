@@ -21,7 +21,6 @@ export const createUser = (props: User) => {
       password: props.password,
     })
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((error) => {
@@ -32,9 +31,9 @@ export const createUser = (props: User) => {
     });
 };
 
-export const fetchUser = async (props: User) => {
+export const fetchUser = async (user: User) => {
   return await axios
-    .get(`http://localhost:4001/users/${props.username}/${props.password}`)
+    .get(`http://localhost:4001/users/${user.username}/${user.password}`)
     .then((res) => {
       return res.data;
     })

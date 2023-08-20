@@ -39,10 +39,10 @@ knex.schema
           table.string("numeric").unique();
           table.string("professor");
           table.string("title");
-          table.integer("user_id").unsigned();
+          table.integer("user").unsigned();
           table
-            .foreign("user_id")
-            .references("id")
+            .foreign("user")
+            .references("username")
             .inTable("Users")
             .onDelete("CASCADE");
         })
@@ -87,10 +87,10 @@ knex.schema
           table.string("title");
           table.string("description");
           table.timestamp("due_date");
-          table.integer("user_id").unsigned();
+          table.integer("user").unsigned();
           table
-            .foreign("user_id")
-            .references("id")
+            .foreign("user")
+            .references("username")
             .inTable("Users")
             .onDelete("CASCADE");
         })
@@ -121,8 +121,7 @@ knex.schema
     if (!exists) {
       return knex.schema
         .createTable("users", (table) => {
-          table.increments("id").primary();
-          table.string("username").notNullable().unique();
+          table.string("username").primary();
           table.string("password").notNullable();
         })
         .then(() => {

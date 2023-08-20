@@ -36,7 +36,7 @@ export const createAssignment = (props: AssignmentObject) => {
       title: props.title,
       description: props.description,
       due_date: props.due_date,
-      user_id: props.user_id,
+      user: props.user,
     })
     .then((res) => {
       return res.data;

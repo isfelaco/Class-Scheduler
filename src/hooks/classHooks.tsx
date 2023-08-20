@@ -14,6 +14,19 @@ export const fetchClasses = async () => {
     });
 };
 
+export const fetchClassesByUser = async (username: string) => {
+  // Send GET request to 'classes/all' endpoint
+  return await axios
+    .get(`http://localhost:4001/classes/classes-by-user/${username}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(`There was an error retrieving the class list: ${error}`);
+      throw new Error(error);
+    });
+};
+
 export const fetchClassByNumeric = async (numeric: string) => {
   return await axios
     .get(`http://localhost:4001/classes/class-by-numeric/${numeric}`)
@@ -45,7 +58,7 @@ export const createClass = (props: ClassObject) => {
       numeric: props.numeric,
       title: props.title,
       professor: props.professor,
-      user_id: props.user_id,
+      user: props.user,
     })
     .then((res) => {
       return res.data;

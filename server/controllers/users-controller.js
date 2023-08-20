@@ -18,7 +18,7 @@ exports.usersAll = async (req, res) => {
 exports.usersGet = async (req, res) => {
   // Get user from database
   knex("Users")
-    .where({ username: req.params.username }, { password: req.params.password }) // find correct record based on id
+    .where({ username: req.params.username, password: req.params.password }) // find correct record based on id
     .first()
     .then((data) => {
       // Send classes extracted from database in response
@@ -43,7 +43,7 @@ exports.usersCreate = async (req, res) => {
     })
     .then((insertedUser) => {
       knex("Users")
-        .where({ id: insertedUser[0] })
+        .where({ username: insertedUser[0] })
         .first()
         .then((selectedUser) => {
           return res.json(selectedUser);

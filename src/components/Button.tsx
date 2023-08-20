@@ -30,12 +30,13 @@ export function Button(props: ButtonProps) {
 
 type LinkedButtonProps = ButtonProps & {
   link: string;
+  state?: any;
 };
 
 export function LinkedButton(props: LinkedButtonProps) {
-  const { children, link } = props;
+  const { children, link, state } = props;
   return (
-    <Link to={link}>
+    <Link to={link} state={state}>
       <StyledButton buttonColor="orange">{children}</StyledButton>
     </Link>
   );

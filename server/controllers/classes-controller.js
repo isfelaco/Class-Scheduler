@@ -20,6 +20,23 @@ exports.classesAll = async (req, res) => {
     });
 };
 
+exports.classesByUser = async (req, res) => {
+  // Get all classes from database
+  knex("Classes")
+    .where({ user: req.params.username }) // find correct record based on id
+    .then((data) => {
+      // Send classes extracted from database in response
+      res.json(data);
+    })
+    .catch((err) => {
+      // Send a error message in response
+      res.json({
+        message: `There was an error retrieving the classes for this user`,
+        error: err,
+      });
+    });
+};
+
 exports.classGetByNumeric = async (req, res) => {
   // Get all classes from database
   knex("Classes")
@@ -65,7 +82,7 @@ exports.classesCreate = async (req, res) => {
       numeric: req.body.numeric,
       title: req.body.title,
       professor: req.body.professor,
-      user_id: req.body.user_id,
+      user: req.body.user,
     })
     .then((insertedClass) => {
       knex("Classes")
