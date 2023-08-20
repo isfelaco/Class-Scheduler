@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/all", usersRoutes.usersAll);
 
-router.get("/:username", usersRoutes.usersGet);
+router.get("/:username/:password", usersRoutes.usersGet);
 
 router.post("/create", usersRoutes.usersCreate);
 

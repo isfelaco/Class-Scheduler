@@ -16,9 +16,9 @@ exports.usersAll = async (req, res) => {
 };
 
 exports.usersGet = async (req, res) => {
-  // Get all users from database
+  // Get user from database
   knex("Users")
-    .where({ id: req.params.username }, { password: req.params.password }) // find correct record based on id
+    .where({ username: req.params.username }, { password: req.params.password }) // find correct record based on id
     .first()
     .then((data) => {
       // Send classes extracted from database in response

@@ -31,3 +31,15 @@ export const createUser = (props: User) => {
       throw new Error(error);
     });
 };
+
+export const fetchUser = async (props: User) => {
+  return await axios
+    .get(`http://localhost:4001/users/${props.username}/${props.password}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(`There was an error retrieving the user: ${error}`);
+      throw new Error(error);
+    });
+};
