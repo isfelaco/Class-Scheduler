@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { LinkedButton } from "../components/Button";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -24,8 +25,8 @@ const Link = styled(NavLink)`
 export default function Home() {
   return (
     <HomeContainer>
-      <Link to="/my-classes">My Classes</Link>
-      <Link to="/my-assignments">My Assignments</Link>
+      <LinkedButton link="/my-classes">My Classes</LinkedButton>
+      <LinkedButton link="/my-assignments">My Assignments</LinkedButton>
     </HomeContainer>
   );
 }
