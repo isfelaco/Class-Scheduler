@@ -8,7 +8,6 @@ import {
 } from "../hooks/classHooks";
 import { ClassObject } from "../types";
 import Table from "../components/Table";
-import styled from "styled-components";
 import Modal from "../components/Modal";
 import Page from "../components/Page";
 import { Button, ButtonRow } from "../components/Button";
@@ -96,6 +95,7 @@ export default function Classes() {
             <input type="text" name="title" />
             <label>Professor</label>
             <input type="text" name="professor" />
+            <input type="hidden" name="user_id" value="1" />
             <input type="submit" value="Create" className="submit" />
           </Form>
         </Modal>

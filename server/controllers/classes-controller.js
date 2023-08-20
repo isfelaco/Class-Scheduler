@@ -13,7 +13,10 @@ exports.classesAll = async (req, res) => {
     })
     .catch((err) => {
       // Send a error message in response
-      res.json({ message: `There was an error retrieving classes: ${err}` });
+      res.json({
+        message: `There was an error retrieving classes`,
+        error: err,
+      });
     });
 };
 
@@ -28,7 +31,10 @@ exports.classGetByNumeric = async (req, res) => {
     })
     .catch((err) => {
       // Send a error message in response
-      res.json({ message: `There was an error retrieving the class: ${err}` });
+      res.json({
+        message: `There was an error retrieving the class`,
+        error: err,
+      });
     });
 };
 
@@ -43,7 +49,10 @@ exports.classGetById = async (req, res) => {
     })
     .catch((err) => {
       // Send a error message in response
-      res.json({ message: `There was an error retrieving the class: ${err}` });
+      res.json({
+        message: `There was an error retrieving the class`,
+        error: err,
+      });
     });
 };
 
@@ -56,6 +65,7 @@ exports.classesCreate = async (req, res) => {
       numeric: req.body.numeric,
       title: req.body.title,
       professor: req.body.professor,
+      user_id: req.body.user_id,
     })
     .then((insertedClass) => {
       knex("Classes")
@@ -68,7 +78,8 @@ exports.classesCreate = async (req, res) => {
     .catch((err) => {
       // Send a error message in response
       res.json({
-        message: `There was an error creating ${req.body.numeric} class: ${err}`,
+        message: `There was an error creating ${req.body.numeric} class`,
+        error: err,
       });
     });
 };
@@ -85,7 +96,8 @@ exports.classesDelete = async (req, res) => {
     .catch((err) => {
       // Send a error message in response
       res.json({
-        message: `There was an error deleting id ${req.params.id} class: ${err}`,
+        message: `There was an error deleting id ${req.params.id} class`,
+        error: err,
       });
     });
 };
@@ -103,6 +115,9 @@ exports.classesReset = async (req, res) => {
     })
     .catch((err) => {
       // Send a error message in response
-      res.json({ message: `There was an error resetting class list: ${err}.` });
+      res.json({
+        message: `There was an error resetting class list`,
+        error: err,
+      });
     });
 };

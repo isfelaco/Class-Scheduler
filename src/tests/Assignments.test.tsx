@@ -72,7 +72,7 @@ describe("createAssignment", () => {
       classID: 1,
       title: "Title 2",
       description: "Description",
-      dueDate: new Date(),
+      due_date: new Date(),
     };
     // const mockAxiosGet = jest.spyOn(axios, "get");
     // mockAxiosGet.mockImplementation(async () => initialData);

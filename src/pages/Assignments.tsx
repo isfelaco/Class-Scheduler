@@ -94,7 +94,8 @@ export default function Assignments() {
             <label>Description</label>
             <input type="text" name="description" />
             <label>Due Date</label>
-            <input type="date" name="dueDate" />
+            <input type="date" name="due_date" />
+            <input type="hidden" name="user_id" value="1" />
             <input type="submit" value="Create Assignment" className="submit" />
           </Form>
         </Modal>

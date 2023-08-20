@@ -45,6 +45,7 @@ export const createClass = (props: ClassObject) => {
       numeric: props.numeric,
       title: props.title,
       professor: props.professor,
+      user_id: props.user_id,
     })
     .then((res) => {
       return res.data;

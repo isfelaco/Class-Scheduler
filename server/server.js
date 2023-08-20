@@ -8,6 +8,7 @@ const helmet = require("helmet");
 // Import routes
 const classesRouter = require("./routes/classes-routes");
 const assignmentsRouter = require("./routes/assignments-routes");
+const usersRouter = require("./routes/users-routes");
 
 // Set default port for express app
 const PORT = process.env.PORT || 4001;
@@ -26,6 +27,7 @@ app.use(bodyParser.json());
 // Implement classes route
 app.use("/classes", classesRouter);
 app.use("/assignments", assignmentsRouter);
+app.use("/users", usersRouter);
 
 // Implement 500 error route
 app.use(function (err, req, res, next) {

@@ -35,7 +35,8 @@ exports.assignmentsCreate = async (req, res) => {
       class_numeric: req.body.class_numeric,
       title: req.body.title,
       description: req.body.description,
-      dueDate: req.body.dueDate,
+      due_date: req.body.due_date,
+      user_id: req.body.user_id,
     })
     .then((insertedAssignment) => {
       knex("Assignments")

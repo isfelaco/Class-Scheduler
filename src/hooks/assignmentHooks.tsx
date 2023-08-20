@@ -35,7 +35,8 @@ export const createAssignment = (props: AssignmentObject) => {
       class_numeric: props.class_numeric,
       title: props.title,
       description: props.description,
-      dueDate: props.dueDate,
+      due_date: props.due_date,
+      user_id: props.user_id,
     })
     .then((res) => {
       return res.data;
