@@ -18,8 +18,10 @@ const HomeContainer = styled.div`
 `;
 
 export default function Home() {
-  fetchUsers().then((res) => console.log(res));
-  const [user, setUser] = useState<User | null>(null);
+  // fetchUsers().then((res) => console.log(res));
+  const [user, setUser] = useState<string | null>(
+    localStorage.getItem("username")
+  );
   const [newUser, setNewUser] = useState<User | null>(null);
   const [openModal, setModal] = useState(false);
 
@@ -33,13 +35,16 @@ export default function Home() {
       formElemKeys.map((key) => [key, normalizeValues(formData.getAll(key))])
     );
   }
+
   const handleLogin = async (e: any) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData);
     fetchUser(obj).then((res) => {
-      if (res) setUser(obj);
-      else {
+      if (res) {
+        localStorage.setItem("username", obj.username);
+        setUser(obj.username);
+      } else {
         setNewUser(obj);
         setModal(true);
       }
@@ -47,9 +52,17 @@ export default function Home() {
   };
 
   const handleCreateUser = async () => {
-    if (newUser) await createUser(newUser);
-    setUser(newUser);
+    if (newUser) {
+      await createUser(newUser);
+      localStorage.setItem("username", newUser.username);
+      setUser(newUser.username);
+    }
     setModal(false);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.clear();
   };
 
   return (
@@ -57,13 +70,15 @@ export default function Home() {
       <h1>Class Scheduler</h1>
       <i>
         {user
-          ? `Logged in as ${user?.username}`
+          ? `Logged in as ${user}`
           : "Log in or create an account to continue"}
       </i>
       {user && (
         <ButtonRow>
-          <LinkedButton link="/my-classes">View Classes</LinkedButton>
-          <LinkedButton link="/my-assignments">View Assignments</LinkedButton>
+          <LinkedButton link={`/${user}/my-classes`}>View Classes</LinkedButton>
+          <LinkedButton link={`/${user}/my-assignments`}>
+            View Assignments
+          </LinkedButton>
         </ButtonRow>
       )}
       {!user && (
@@ -75,7 +90,7 @@ export default function Home() {
           <input type="submit" value="Login" className="submit" />
         </Form>
       )}
-      <Button onClick={() => setUser(null)}>Logout</Button>
+      <Button onClick={handleLogout}>Logout</Button>
       {openModal && (
         <Modal onClose={() => setModal(false)}>
           <h1>Create User</h1>
