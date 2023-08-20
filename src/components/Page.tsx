@@ -5,9 +5,12 @@ import { LinkedButton } from "./Button";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 40px;
   align-items: center;
   height: 100vh;
   width: 100%;
+  box-sizing: border-box;
+  padding: 30px;
 `;
 
 const Header = styled.div`
@@ -15,8 +18,6 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 30px;
-  box-sizing: border-box;
 `;
 
 type PageProps = {

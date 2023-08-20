@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Classes from "./pages/Classes";
@@ -22,7 +23,7 @@ export const pages: { [id: string]: ReactElement } = {
 
 export default function App() {
   return (
-    <AppContainer>
+    <AppContainer className="App">
       <BrowserRouter>
         <Routes>
           {Object.entries(pages).map(([route, element], i) => (

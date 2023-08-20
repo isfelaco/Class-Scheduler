@@ -11,6 +11,7 @@ import Table from "../components/Table";
 import styled from "styled-components";
 import Modal from "../components/Modal";
 import Page from "../components/Page";
+import { Button, ButtonRow } from "../components/Button";
 
 export default function Classes() {
   const [classes, setClasses] = useState<[] | null>(null);
@@ -68,8 +69,10 @@ export default function Classes() {
 
   return (
     <Page header="Classes">
-      <button onClick={() => setModal(true)}>Add a Class</button>
-      <button onClick={handleResetClasses}>Reset All Classes</button>
+      <ButtonRow>
+        <Button onClick={() => setModal(true)}>Add a Class</Button>
+        <Button onClick={handleResetClasses}>Reset All Classes</Button>
+      </ButtonRow>
       <Table
         headerData={["Numeric", "Professor", "Title"]}
         data={classes}
