@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
 import { ButtonRow, LinkedButton } from "../components/Button";
 

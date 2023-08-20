@@ -6,9 +6,7 @@ import {
   resetAssignments,
 } from "../hooks/assignmentHooks";
 import Table from "../components/Table";
-import styled from "styled-components";
 import Modal from "../components/Modal";
-import { fetchClassByNumeric } from "../hooks/classHooks";
 import { AssignmentObject } from "../types";
 import Page from "../components/Page";
 import { Button, ButtonRow } from "../components/Button";

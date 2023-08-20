@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { classAssignments } from "../hooks/assignmentHooks";
-import { AssignmentObject } from "../types";
 import Table from "../components/Table";
 import Page from "../components/Page";
 
