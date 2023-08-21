@@ -15,6 +15,23 @@ exports.assignmentsAll = async (req, res) => {
     });
 };
 
+exports.assignmentsByUser = async (req, res) => {
+  // Get all classes from database
+  knex("Assignments")
+    .where({ user: req.params.username }) // find correct record based on id
+    .then((data) => {
+      // Send classes extracted from database in response
+      res.json(data);
+    })
+    .catch((err) => {
+      // Send a error message in response
+      res.json({
+        message: `There was an error retrieving the assignments for this user`,
+        error: err,
+      });
+    });
+};
+
 exports.assignmentsSome = async (req, res) => {
   knex("Assignments")
     .where({ class_numeric: req.body.numeric })
@@ -36,7 +53,7 @@ exports.assignmentsCreate = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       due_date: req.body.due_date,
-      user_id: req.body.user_id,
+      user: req.body.user,
     })
     .then((insertedAssignment) => {
       knex("Assignments")

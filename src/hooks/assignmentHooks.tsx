@@ -15,6 +15,21 @@ export const fetchAssignments = () => {
     });
 };
 
+export const fetchAssignmentsByUser = async (username: string) => {
+  // Send GET request to 'classes/all' endpoint
+  return await axios
+    .get(`http://localhost:4001/assignments/assignments-by-user/${username}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(
+        `There was an error retrieving the assignment list: ${error}`
+      );
+      throw new Error(error);
+    });
+};
+
 export const classAssignments = (numeric: string) => {
   return axios
     .put("http://localhost:4001/assignments/some", { numeric: numeric })

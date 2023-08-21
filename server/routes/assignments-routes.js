@@ -6,6 +6,11 @@ const router = express.Router();
 
 router.get("/all", assignmentsRoutes.assignmentsAll);
 
+router.get(
+  "/assignments-by-user/:username",
+  assignmentsRoutes.assignmentsByUser
+);
+
 router.put("/some", assignmentsRoutes.assignmentsSome);
 
 router.post("/create", assignmentsRoutes.assignmentsCreate);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   createAssignment,
   deleteAssignment,
-  fetchAssignments,
+  fetchAssignmentsByUser,
   resetAssignments,
 } from "../hooks/assignmentHooks";
 import Table from "../components/Table";
@@ -11,18 +11,22 @@ import { AssignmentObject } from "../types";
 import Page from "../components/Page";
 import { Button, ButtonRow } from "../components/Button";
 import Form from "../components/Form";
+import { useLocation } from "react-router-dom";
 
 export default function Assignments() {
   const [assignments, setAssignments] = useState<[] | null>(null);
   const [openModal, setModal] = useState(false);
   const [error, setError] = useState("");
 
+  let location = useLocation();
+  const user = location.state;
+
   useEffect(() => {
     updateAssignments();
   }, []);
 
   function updateAssignments() {
-    fetchAssignments().then((res) => setAssignments(res));
+    fetchAssignmentsByUser(user).then((res) => setAssignments(res));
   }
 
   // source: https://www.designcise.com/web/tutorial/how-to-convert-html-form-data-to-javascript-object
@@ -95,7 +99,7 @@ export default function Assignments() {
             <input type="text" name="description" />
             <label>Due Date</label>
             <input type="date" name="due_date" />
-            <input type="hidden" name="user_id" value="1" />
+            <input type="hidden" name="user" value={user} />
             <input type="submit" value="Create Assignment" className="submit" />
           </Form>
         </Modal>
