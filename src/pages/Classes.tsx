@@ -31,9 +31,10 @@ export default function Classes() {
 
   const navigate = useNavigate();
   const openClass = (c: ClassObject) => {
-    navigate(`${user}/my-classes/${c.numeric}`, {
+    navigate(`${c.numeric}`, {
       state: {
         class: c,
+        user: user,
       },
     });
   };

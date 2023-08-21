@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { classAssignments } from "../hooks/assignmentHooks";
+import { fetchAssignmentsByClass } from "../hooks/assignmentHooks";
 import Table from "../components/Table";
 import Page from "../components/Page";
 
 export default function Class() {
   let location = useLocation();
   const c = location.state.class;
+  const user = location.state.user;
+  console.log(user);
 
   const [assignments, setAssignments] = useState<[] | null>(null);
   useEffect(() => {
-    classAssignments(c.numeric).then((res) => setAssignments(res));
+    fetchAssignmentsByClass(c.numeric, user).then((res) => setAssignments(res));
   }, []);
 
   return (

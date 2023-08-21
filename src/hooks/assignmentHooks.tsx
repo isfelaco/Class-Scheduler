@@ -15,10 +15,10 @@ export const fetchAssignments = () => {
     });
 };
 
-export const fetchAssignmentsByUser = async (username: string) => {
+export const fetchAssignmentsByUser = async (user: string) => {
   // Send GET request to 'classes/all' endpoint
   return await axios
-    .get(`http://localhost:4001/assignments/assignments-by-user/${username}`)
+    .get(`http://localhost:4001/assignments/assignments-by-user/${user}`)
     .then((res) => {
       return res.data;
     })
@@ -30,9 +30,11 @@ export const fetchAssignmentsByUser = async (username: string) => {
     });
 };
 
-export const classAssignments = (numeric: string) => {
+export const fetchAssignmentsByClass = (numeric: string, user: string) => {
   return axios
-    .put("http://localhost:4001/assignments/some", { numeric: numeric })
+    .get(
+      `http://localhost:4001/assignments/assignments-by-class/${numeric}/${user}`
+    )
     .then((res) => {
       return res.data;
     })

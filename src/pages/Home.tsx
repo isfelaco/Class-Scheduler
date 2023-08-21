@@ -78,7 +78,7 @@ export default function Home() {
           <LinkedButton link={`/${user}/my-classes`} state={user}>
             View Classes
           </LinkedButton>
-          <LinkedButton link={`/${user}/my-assignments`}>
+          <LinkedButton link={`/${user}/my-assignments`} state={user}>
             View Assignments
           </LinkedButton>
         </ButtonRow>

@@ -18,7 +18,7 @@ exports.assignmentsAll = async (req, res) => {
 exports.assignmentsByUser = async (req, res) => {
   // Get all classes from database
   knex("Assignments")
-    .where({ user: req.params.username }) // find correct record based on id
+    .where({ user: req.params.user }) // find correct record based on id
     .then((data) => {
       // Send classes extracted from database in response
       res.json(data);
@@ -32,9 +32,9 @@ exports.assignmentsByUser = async (req, res) => {
     });
 };
 
-exports.assignmentsSome = async (req, res) => {
+exports.assignmentsByClass = async (req, res) => {
   knex("Assignments")
-    .where({ class_numeric: req.body.numeric })
+    .where({ class_numeric: req.params.numeric, user: req.params.user })
     .then((userData) => {
       res.json(userData);
     })

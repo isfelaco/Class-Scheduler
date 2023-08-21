@@ -14,10 +14,10 @@ export const fetchClasses = async () => {
     });
 };
 
-export const fetchClassesByUser = async (username: string) => {
+export const fetchClassesByUser = async (user: string) => {
   // Send GET request to 'classes/all' endpoint
   return await axios
-    .get(`http://localhost:4001/classes/classes-by-user/${username}`)
+    .get(`http://localhost:4001/classes/classes-by-user/${user}`)
     .then((res) => {
       return res.data;
     })
