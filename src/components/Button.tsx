@@ -2,9 +2,9 @@ import React, { ReactElement } from "react";
 import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledButton = styled.button<{ buttonColor: string }>`
-  background-color: ${({ buttonColor }: { buttonColor: string }) =>
-    buttonColor === "orange" ? "#f7c59f" : "#70C1FF"};
+const StyledButton = styled.button<{ color: string }>`
+  background-color: ${({ color }: { color: string }) =>
+    color === "orange" ? "#f7c59f" : "#70C1FF"};
   border: 1px solid white;
   border-radius: 10px;
   padding: 10px;
@@ -22,7 +22,7 @@ type ButtonProps = {
 export function Button(props: ButtonProps) {
   const { color = "blue", onClick, children } = props;
   return (
-    <StyledButton buttonColor={color} onClick={onClick}>
+    <StyledButton color={color} onClick={onClick}>
       {children}
     </StyledButton>
   );
@@ -30,13 +30,14 @@ export function Button(props: ButtonProps) {
 
 type LinkedButtonProps = ButtonProps & {
   link: string;
+  state?: any;
 };
 
 export function LinkedButton(props: LinkedButtonProps) {
-  const { children, link } = props;
+  const { children, link, state } = props;
   return (
-    <Link to={link}>
-      <StyledButton buttonColor="orange">{children}</StyledButton>
+    <Link to={link} state={state}>
+      <StyledButton color="orange">{children}</StyledButton>
     </Link>
   );
 }

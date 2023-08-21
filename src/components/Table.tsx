@@ -50,7 +50,6 @@ export default function Table(props: TableProps) {
     <TableContainer>
       <TableHeader>
         <tr>
-          <th>#</th>
           {headerData.map((hd) => (
             <th key={hd}>{hd}</th>
           ))}
@@ -61,9 +60,11 @@ export default function Table(props: TableProps) {
         {data &&
           data.map((item: any) => (
             <tr key={item.id}>
-              {Object.entries(item).map((attr: any) => {
-                return <td key={attr[0]}>{attr[1]}</td>;
-              })}
+              {Object.entries(item)
+                .filter((attr: any) => attr[0] !== "id" && attr[0] !== "user")
+                .map((attr: any) => {
+                  return <td key={attr[0]}>{attr[1]}</td>;
+                })}
               <td className="actions">
                 <ButtonRow>
                   <Button onClick={() => button1Action(item)}>

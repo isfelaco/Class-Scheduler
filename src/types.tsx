@@ -1,8 +1,14 @@
+export type User = {
+  username: string;
+  password: string;
+};
+
 export type ClassObject = {
   id?: number;
   numeric: string;
   title: string;
   professor: string;
+  user?: string;
 };
 
 export type AssignmentObject = {
@@ -10,5 +16,6 @@ export type AssignmentObject = {
   class_numeric: string;
   title: string;
   description: string;
-  dueDate: Date;
+  due_date: Date;
+  user?: string;
 };

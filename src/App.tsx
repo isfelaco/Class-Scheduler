@@ -16,9 +16,9 @@ const AppContainer = styled.div`
 
 export const pages: { [id: string]: ReactElement } = {
   "/": <Home />,
-  "/my-classes": <Classes />,
-  "/my-classes/:n": <Class />,
-  "/my-assignments": <Assignments />,
+  "/:user/my-classes": <Classes />,
+  "/:user/my-classes/:n": <Class />,
+  "/:user/my-assignments": <Assignments />,
 };
 
 export default function App() {

@@ -15,9 +15,26 @@ export const fetchAssignments = () => {
     });
 };
 
-export const classAssignments = (numeric: string) => {
+export const fetchAssignmentsByUser = async (user: string) => {
+  // Send GET request to 'classes/all' endpoint
+  return await axios
+    .get(`http://localhost:4001/assignments/assignments-by-user/${user}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(
+        `There was an error retrieving the assignment list: ${error}`
+      );
+      throw new Error(error);
+    });
+};
+
+export const fetchAssignmentsByClass = (numeric: string, user: string) => {
   return axios
-    .put("http://localhost:4001/assignments/some", { numeric: numeric })
+    .get(
+      `http://localhost:4001/assignments/assignments-by-class/${numeric}/${user}`
+    )
     .then((res) => {
       return res.data;
     })
@@ -35,7 +52,8 @@ export const createAssignment = (props: AssignmentObject) => {
       class_numeric: props.class_numeric,
       title: props.title,
       description: props.description,
-      dueDate: props.dueDate,
+      due_date: props.due_date,
+      user: props.user,
     })
     .then((res) => {
       return res.data;

@@ -6,7 +6,12 @@ const router = express.Router();
 
 router.get("/all", assignmentsRoutes.assignmentsAll);
 
-router.put("/some", assignmentsRoutes.assignmentsSome);
+router.get("/assignments-by-user/:user", assignmentsRoutes.assignmentsByUser);
+
+router.get(
+  "/assignments-by-class/:numeric/:user",
+  assignmentsRoutes.assignmentsByClass
+);
 
 router.post("/create", assignmentsRoutes.assignmentsCreate);
 
