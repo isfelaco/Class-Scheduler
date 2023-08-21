@@ -56,15 +56,26 @@ export default function Classes() {
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData);
     const c = await createClass(obj);
-    updateClasses();
-    openClass(c);
+    if (c.error) {
+      setError(
+        "There was an error adding this class. This class may already exist."
+      );
+    } else {
+      setError("");
+      updateClasses();
+      openClass(c);
+    }
   };
 
   const handleDeleteClass = async (c: ClassObject) => {
     if (c.id) {
-      await deleteClass(c.id);
-      updateClasses();
-    } else setError("There was an error deleting this class");
+      const d = await deleteClass(c.id);
+      if (d.error) setError("There was an error deleting this class");
+      else {
+        setError("");
+        updateClasses();
+      }
+    }
   };
 
   const handleResetClasses = async () => {

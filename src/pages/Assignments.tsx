@@ -60,8 +60,14 @@ export default function Assignments() {
   };
 
   const handleDeleteAssignment = async (a: AssignmentObject) => {
-    await deleteAssignment(a.id || 0); // temporary
-    updateAssignments();
+    if (a.id) {
+      const d = await deleteAssignment(a.id);
+      if (d.error) setError("There was an error deleting this assignment");
+      else {
+        setError("");
+        updateAssignments();
+      }
+    }
   };
 
   const handleResetAssignments = async () => {
@@ -104,7 +110,7 @@ export default function Assignments() {
           </Form>
         </Modal>
       )}
-      {error && <h3>{error}</h3>}
+      {error && <i>{error}</i>}
     </Page>
   );
 }

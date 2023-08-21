@@ -36,7 +36,7 @@ knex.schema
       return knex.schema
         .createTable("classes", (table) => {
           table.increments("id").primary();
-          table.string("numeric").unique();
+          table.string("numeric");
           table.string("professor");
           table.string("title");
           table.integer("user").unsigned();
@@ -45,6 +45,7 @@ knex.schema
             .references("username")
             .inTable("Users")
             .onDelete("CASCADE");
+          table.unique(["numeric", "user"]);
         })
         .then(() => {
           // Log success message
