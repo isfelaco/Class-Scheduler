@@ -1,5 +1,6 @@
 const knex = require("./../db");
 
+// gets all users from database table
 exports.usersAll = async (req, res) => {
   knex
     .select("*")
@@ -15,17 +16,15 @@ exports.usersAll = async (req, res) => {
     });
 };
 
+// gets user by username and password
 exports.usersGet = async (req, res) => {
-  // Get user from database
   knex("Users")
     .where({ username: req.params.username, password: req.params.password }) // find correct record based on id
     .first()
     .then((data) => {
-      // Send classes extracted from database in response
       res.json(data);
     })
     .catch((err) => {
-      // Send a error message in response
       res.json({
         message: `There was an error retrieving the user`,
         error: err,
@@ -33,11 +32,10 @@ exports.usersGet = async (req, res) => {
     });
 };
 
+// adds a user to the database table
 exports.usersCreate = async (req, res) => {
-  // Add new user to database
   knex("Users")
     .insert({
-      // insert new record, a user
       username: req.body.username,
       password: req.body.password,
     })
@@ -50,7 +48,6 @@ exports.usersCreate = async (req, res) => {
         });
     })
     .catch((err) => {
-      // Send a error message in response
       res.json({
         message: `There was an error creating ${req.body.username} user`,
         error: err,

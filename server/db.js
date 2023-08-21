@@ -1,7 +1,5 @@
-// Import path module
 const path = require("path");
 
-// Get the location of database.sqlite file
 const dbPath = path.resolve(__dirname, "db/database.sqlite");
 
 // Create connection to SQLite database
@@ -22,17 +20,10 @@ knex.raw("PRAGMA foreign_keys = ON;").then(() => {
   console.log("Foreign Key Check activated.");
 });
 
-// Create a table in the database called "classes"
 knex.schema
-  // Make sure no "classes" table exists
-  // before trying to create new
   .hasTable("classes")
   .then((exists) => {
     if (!exists) {
-      // If no "classes" table exists
-      // create new, with "title", "numeric", "professor" columns
-      // and use "id" as a primary identification
-      // and increment "id" with every new record (class)
       return knex.schema
         .createTable("classes", (table) => {
           table.increments("id").primary();
@@ -48,7 +39,6 @@ knex.schema
           table.unique(["numeric", "user"]);
         })
         .then(() => {
-          // Log success message
           console.log("Table 'Classes' created");
         })
         .catch((error) => {
@@ -57,20 +47,11 @@ knex.schema
     }
   })
   .then(() => {
-    // Log success message
     console.log("done");
   })
   .catch((error) => {
     console.error(`There was an error setting up the database: ${error}`);
   });
-
-// Just for debugging purposes:
-// Log all data in "classes" table
-knex
-  .select("*")
-  .from("classes")
-  .then((data) => console.log("Classes:", data))
-  .catch((err) => console.log(err));
 
 knex.schema
   .hasTable("assignments")
@@ -110,12 +91,6 @@ knex.schema
     console.error(`There was an error setting up the database: ${error}`);
   });
 
-knex
-  .select("*")
-  .from("assignments")
-  .then((data) => console.log("Assignments:", data))
-  .catch((err) => console.log(err));
-
 knex.schema
   .hasTable("users")
   .then((exists) => {
@@ -140,11 +115,22 @@ knex.schema
     console.error(`There was an error setting up the database: ${error}`);
   });
 
+// Just for debugging purposes:
+// Log all data in tables
+knex
+  .select("*")
+  .from("classes")
+  .then((data) => console.log("Classes:", data))
+  .catch((err) => console.log(err));
+knex
+  .select("*")
+  .from("assignments")
+  .then((data) => console.log("Assignments:", data))
+  .catch((err) => console.log(err));
 knex
   .select("*")
   .from("users")
   .then((data) => console.log("Users:", data))
   .catch((err) => console.log(err));
 
-// Export the database
 module.exports = knex;

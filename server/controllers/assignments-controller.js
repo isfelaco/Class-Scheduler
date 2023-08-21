@@ -1,11 +1,12 @@
 const knex = require("./../db");
 
+// gets all assignments in database table
 exports.assignmentsAll = async (req, res) => {
   knex
     .select("*")
     .from("assignments")
-    .then((userData) => {
-      res.json(userData);
+    .then((data) => {
+      res.json(data);
     })
     .catch((err) => {
       res.json({
@@ -15,16 +16,14 @@ exports.assignmentsAll = async (req, res) => {
     });
 };
 
+// gets assignments based on user
 exports.assignmentsByUser = async (req, res) => {
-  // Get all classes from database
   knex("Assignments")
-    .where({ user: req.params.user }) // find correct record based on id
+    .where({ user: req.params.user })
     .then((data) => {
-      // Send classes extracted from database in response
       res.json(data);
     })
     .catch((err) => {
-      // Send a error message in response
       res.json({
         message: `There was an error retrieving the assignments for this user`,
         error: err,
@@ -32,20 +31,22 @@ exports.assignmentsByUser = async (req, res) => {
     });
 };
 
+// gets assignments based on class and user
 exports.assignmentsByClass = async (req, res) => {
   knex("Assignments")
     .where({ class_numeric: req.params.numeric, user: req.params.user })
-    .then((userData) => {
+    .then((data) => {
       res.json(userData);
     })
     .catch((err) => {
       res.json({
-        message: `There was an error retrieving assignments`,
+        message: `There was an error retrieving assignments for this class and user`,
         error: err,
       });
     });
 };
 
+// adds an assignment to the database table
 exports.assignmentsCreate = async (req, res) => {
   knex("Assignments")
     .insert({
@@ -56,6 +57,7 @@ exports.assignmentsCreate = async (req, res) => {
       user: req.body.user,
     })
     .then((insertedAssignment) => {
+      // return the created assignment object
       knex("Assignments")
         .where({ id: insertedAssignment[0] })
         .first()
@@ -71,6 +73,7 @@ exports.assignmentsCreate = async (req, res) => {
     });
 };
 
+// deletes an assignment from the database table based on its id
 exports.assignmentsDelete = async (req, res) => {
   knex("Assignments")
     .del()
@@ -88,6 +91,7 @@ exports.assignmentsDelete = async (req, res) => {
     });
 };
 
+// resets database table; removes all entries
 exports.assignmentsReset = async (req, res) => {
   knex
     .select("*")
