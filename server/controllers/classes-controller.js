@@ -88,6 +88,24 @@ exports.classesCreate = async (req, res) => {
     });
 };
 
+exports.classEdit = async (req, res) => {
+  knex("Classes")
+    .where({ id: req.body.class.id })
+    .update({
+      title: req.body.class.title,
+      professor: req.body.class.professor,
+    })
+    .then(() => {
+      res.json(`Class with id ${req.body.class.id} updated.`);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error editing ${req.body.class.title} class`,
+        error: err,
+      });
+    });
+};
+
 // deletes a class from the database table based on its id
 exports.classesDelete = async (req, res) => {
   knex("Classes")

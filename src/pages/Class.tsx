@@ -3,20 +3,35 @@ import { useLocation } from "react-router-dom";
 import { fetchAssignmentsByClass } from "../hooks/assignmentHooks";
 import Table from "../components/Table";
 import Page from "../components/Page";
+import { editClass, fetchClassById } from "../hooks/classHooks";
+import { Button } from "../components/Button";
 
 export default function Class() {
   let location = useLocation();
-  const c = location.state.class;
+  const [c, setClass] = useState(location.state.class);
   const user = location.state.user;
-  console.log(user);
 
   const [assignments, setAssignments] = useState<[] | null>(null);
   useEffect(() => {
-    fetchAssignmentsByClass(c.numeric, user).then((res) => setAssignments(res));
+    updateClass();
   }, []);
+
+  function updateClass() {
+    fetchAssignmentsByClass(c.numeric, user).then((res) => setAssignments(res));
+    fetchClassById(c.id).then((res) => setClass(res));
+  }
+
+  const handleEditClass = async () => {
+    let newClass = c;
+    newClass.title = "New Title!";
+    newClass.professor = "Professor";
+    const res = await editClass(newClass);
+    updateClass();
+  };
 
   return (
     <Page header={c.title}>
+      <h3>{c.professor}</h3>
       {assignments && assignments.length > 0 ? (
         <Table
           headerData={["Class Numeric", "Title", "Description", "Due Date"]}
@@ -29,6 +44,7 @@ export default function Class() {
       ) : (
         <p>No assignments for this class</p>
       )}
+      <Button onClick={handleEditClass}>Edit Class</Button>
     </Page>
   );
 }

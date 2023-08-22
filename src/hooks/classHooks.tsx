@@ -71,6 +71,18 @@ export const createClass = (props: ClassObject) => {
     });
 };
 
+export const editClass = (c: ClassObject) => {
+  return axios
+    .put("http://localhost:4001/classes/edit", { class: c })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(`There was an error editting this class: ${error}`);
+      throw new Error(error);
+    });
+};
+
 export const deleteClass = (id: number) => {
   // Send PUT request to 'classes/delete' endpoint
   return axios

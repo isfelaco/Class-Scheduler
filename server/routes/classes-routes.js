@@ -16,6 +16,8 @@ router.delete("/:id", classesRoutes.classesDelete);
 
 router.post("/create", classesRoutes.classesCreate);
 
+router.put("/edit", classesRoutes.classEdit);
+
 router.put("/reset", classesRoutes.classesReset);
 
 module.exports = router;
