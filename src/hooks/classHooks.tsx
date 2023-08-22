@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ClassObject } from "../types";
+import { Class, ClassInput } from "../types";
 
 export const fetchClasses = async () => {
   // Send GET request to 'classes/all' endpoint
@@ -51,7 +51,7 @@ export const fetchClassById = async (id: number) => {
     });
 };
 
-export const createClass = (props: ClassObject) => {
+export const createClass = (props: ClassInput) => {
   // Send POST request to 'classes/create' endpoint
   return axios
     .post("http://localhost:4001/classes/create", {
@@ -71,7 +71,7 @@ export const createClass = (props: ClassObject) => {
     });
 };
 
-export const editClass = (c: ClassObject) => {
+export const editClass = (c: Class) => {
   return axios
     .put("http://localhost:4001/classes/edit", { class: c })
     .then((res) => {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AssignmentObject } from "../types";
+import { AssignmentInput } from "../types";
 
 export const fetchAssignments = () => {
   return axios
@@ -46,7 +46,7 @@ export const fetchAssignmentsByClass = (numeric: string, user: string) => {
     });
 };
 
-export const createAssignment = (props: AssignmentObject) => {
+export const createAssignment = (props: AssignmentInput) => {
   return axios
     .post("http://localhost:4001/assignments/create", {
       class_numeric: props.class_numeric,

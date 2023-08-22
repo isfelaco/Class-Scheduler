@@ -7,7 +7,7 @@ import {
 } from "../hooks/assignmentHooks";
 import Table from "../components/Table";
 import Modal from "../components/Modal";
-import { AssignmentObject } from "../types";
+import { Assignment, formDataToObject } from "../types";
 import Page from "../components/Page";
 import { Button, ButtonRow } from "../components/Button";
 import Form from "../components/Form";
@@ -29,17 +29,6 @@ export default function Assignments() {
     fetchAssignmentsByUser(user).then((res) => setAssignments(res));
   }
 
-  // source: https://www.designcise.com/web/tutorial/how-to-convert-html-form-data-to-javascript-object
-  function formDataToObject(formData: any) {
-    const normalizeValues = (values: any) =>
-      values.length > 1 ? values : values[0];
-    const formElemKeys = Array.from(formData.keys());
-    return Object.fromEntries(
-      // store array of values or single value for element key
-      formElemKeys.map((key) => [key, normalizeValues(formData.getAll(key))])
-    );
-  }
-
   const handleCreateAssignment = async (e: any) => {
     setModal(false);
     e.preventDefault();
@@ -59,14 +48,12 @@ export default function Assignments() {
     }
   };
 
-  const handleDeleteAssignment = async (a: AssignmentObject) => {
-    if (a.id) {
-      const d = await deleteAssignment(a.id);
-      if (d.error) setError("There was an error deleting this assignment");
-      else {
-        setError("");
-        updateAssignments();
-      }
+  const handleDeleteAssignment = async (a: Assignment) => {
+    const d = await deleteAssignment(a.id);
+    if (d.error) setError("There was an error deleting this assignment");
+    else {
+      setError("");
+      updateAssignments();
     }
   };
 

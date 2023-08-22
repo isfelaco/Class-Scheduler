@@ -6,7 +6,7 @@ import {
   resetClasses,
   fetchClassesByUser,
 } from "../hooks/classHooks";
-import { ClassObject } from "../types";
+import { Class, formDataToObject } from "../types";
 import Table from "../components/Table";
 import Modal from "../components/Modal";
 import Page from "../components/Page";
@@ -30,7 +30,7 @@ export default function Classes() {
   }
 
   const navigate = useNavigate();
-  const openClass = (c: ClassObject) => {
+  const openClass = (c: Class) => {
     navigate(`${c.numeric}`, {
       state: {
         class: c,
@@ -38,17 +38,6 @@ export default function Classes() {
       },
     });
   };
-
-  // source: https://www.designcise.com/web/tutorial/how-to-convert-html-form-data-to-javascript-object
-  function formDataToObject(formData: any) {
-    const normalizeValues = (values: any) =>
-      values.length > 1 ? values : values[0];
-    const formElemKeys = Array.from(formData.keys());
-    return Object.fromEntries(
-      // store array of values or single value for element key
-      formElemKeys.map((key) => [key, normalizeValues(formData.getAll(key))])
-    );
-  }
 
   const handleCreateClass = async (e: any) => {
     setModal(false);
@@ -67,14 +56,12 @@ export default function Classes() {
     }
   };
 
-  const handleDeleteClass = async (c: ClassObject) => {
-    if (c.id) {
-      const d = await deleteClass(c.id);
-      if (d.error) setError("There was an error deleting this class");
-      else {
-        setError("");
-        updateClasses();
-      }
+  const handleDeleteClass = async (c: Class) => {
+    const d = await deleteClass(c.id);
+    if (d.error) setError("There was an error deleting this class");
+    else {
+      setError("");
+      updateClasses();
     }
   };
 
