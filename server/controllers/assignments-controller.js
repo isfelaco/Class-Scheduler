@@ -36,7 +36,7 @@ exports.assignmentsByClass = async (req, res) => {
   knex("Assignments")
     .where({ class_numeric: req.params.numeric, user: req.params.user })
     .then((data) => {
-      res.json(userData);
+      res.json(data);
     })
     .catch((err) => {
       res.json({

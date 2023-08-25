@@ -21,16 +21,40 @@ knex.raw("PRAGMA foreign_keys = ON;").then(() => {
 });
 
 knex.schema
+  .hasTable("users")
+  .then((exists) => {
+    if (!exists) {
+      return knex.schema
+        .createTable("users", (table) => {
+          table.string("username").primary();
+          table.string("password").notNullable();
+        })
+        .then(() => {
+          console.log("Table 'Users' created");
+        })
+        .catch((error) => {
+          console.error(`There was an error creating table: ${error}`);
+        });
+    }
+  })
+  .then(() => {
+    console.log("done");
+  })
+  .catch((error) => {
+    console.error(`There was an error setting up the database: ${error}`);
+  });
+
+knex.schema
   .hasTable("classes")
   .then((exists) => {
     if (!exists) {
       return knex.schema
         .createTable("classes", (table) => {
-          table.increments("id").primary();
-          table.string("numeric");
+          table.increments("id");
+          table.string("numeric").notNullable();
           table.string("professor");
           table.string("title");
-          table.integer("user").unsigned();
+          table.string("user");
           table
             .foreign("user")
             .references("username")
@@ -60,16 +84,16 @@ knex.schema
       return knex.schema
         .createTable("assignments", (table) => {
           table.increments("id").primary();
-          table.string("class_numeric").unsigned().notNullable();
+          table.string("class_numeric").notNullable();
           table
-            .foreign("class_numeric")
-            .references("numeric")
-            .inTable("Classes")
+            .foreign("user")
+            .references("username")
+            .inTable("Users")
             .onDelete("CASCADE");
           table.string("title");
           table.string("description");
           table.timestamp("due_date");
-          table.integer("user").unsigned();
+          table.string("user").notNullable();
           table
             .foreign("user")
             .references("username")
@@ -78,30 +102,6 @@ knex.schema
         })
         .then(() => {
           console.log("Table 'Assignments' created");
-        })
-        .catch((error) => {
-          console.error(`There was an error creating table: ${error}`);
-        });
-    }
-  })
-  .then(() => {
-    console.log("done");
-  })
-  .catch((error) => {
-    console.error(`There was an error setting up the database: ${error}`);
-  });
-
-knex.schema
-  .hasTable("users")
-  .then((exists) => {
-    if (!exists) {
-      return knex.schema
-        .createTable("users", (table) => {
-          table.string("username").primary();
-          table.string("password").notNullable();
-        })
-        .then(() => {
-          console.log("Table 'Users' created");
         })
         .catch((error) => {
           console.error(`There was an error creating table: ${error}`);
@@ -132,5 +132,9 @@ knex
   .from("users")
   .then((data) => console.log("Users:", data))
   .catch((err) => console.log(err));
+
+// knex("classes")
+//   .insert({ numeric: "CS 1110", user: "user1" })
+//   .then((res) => console.log(res));
 
 module.exports = knex;

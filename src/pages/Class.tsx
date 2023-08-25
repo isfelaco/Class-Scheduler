@@ -14,6 +14,7 @@ export default function Class() {
   const user = location.state.user;
   const [c, setClass] = useState(location.state.class);
   const [openModal, setModal] = useState(false);
+  const [error, setError] = useState("");
 
   const [assignments, setAssignments] = useState<[] | null>(null);
   useEffect(() => {
@@ -31,11 +32,13 @@ export default function Class() {
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData); // normalize data
     const res = await editClass(obj); // create assignment with foreign key
+    if (res.error) setError("There was an error editing this class");
+    else setError("");
     updateClass();
   };
 
   return (
-    <Page header={c.title}>
+    <Page header={`${c.numeric}: ${c.title}`}>
       <h3>{c.professor}</h3>
       {assignments && assignments.length > 0 ? (
         <Table
@@ -64,6 +67,7 @@ export default function Class() {
           </Form>
         </Modal>
       )}
+      {error && <i>{error}</i>}
     </Page>
   );
 }

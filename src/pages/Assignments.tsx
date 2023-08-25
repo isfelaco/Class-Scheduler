@@ -34,10 +34,10 @@ export default function Assignments() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData); // normalize data
-    const a = await createAssignment(obj); // create assignment with foreign key
-
-    if (a.error) {
-      if (a.error.errno === 19) {
+    const res = await createAssignment(obj); // create assignment with foreign key
+    if (res.error) {
+      console.error(res.error);
+      if (res.error.errno === 19) {
         setError(
           "There was an error adding this assignment. Make sure you are adding an assignment to an existing class."
         );
