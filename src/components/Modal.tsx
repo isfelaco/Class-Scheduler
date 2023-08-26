@@ -6,7 +6,7 @@ const ModalContainer = styled.div`
   z-index: 0;
   position: fixed;
   top: 200px;
-  width: 500px;
+  max-width: 500px;
   background-color: white;
   border: 1px solid black;
   border-radius: 3px;
