@@ -17,7 +17,7 @@ exports.usersAll = async (req, res) => {
 };
 
 // gets user by username and password
-exports.usersGet = async (req, res) => {
+exports.userGet = async (req, res) => {
   knex("Users")
     .where({ username: req.params.username, password: req.params.password }) // find correct record based on id
     .first()
@@ -33,7 +33,7 @@ exports.usersGet = async (req, res) => {
 };
 
 // adds a user to the database table
-exports.usersCreate = async (req, res) => {
+exports.userCreate = async (req, res) => {
   knex("Users")
     .insert({
       username: req.body.username,
@@ -52,5 +52,21 @@ exports.usersCreate = async (req, res) => {
         message: `There was an error creating ${req.body.username} user`,
         error: err,
       });
+    });
+};
+
+exports.userLogin = async (req, res) => {
+  knex("Users")
+    .where({ username: req.body.username })
+    .select("password")
+    .then((result) => {
+      if (req.body.password == result[0].password) {
+        res.json({ message: "Login successful" });
+      } else {
+        res.json({ error: "Incorrect password" });
+      }
+    })
+    .catch((err) => {
+      res.json({ error: "User not found" });
     });
 };
