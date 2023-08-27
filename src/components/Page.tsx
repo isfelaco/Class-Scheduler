@@ -27,7 +27,7 @@ type PageProps = {
 
 export default function Page(props: PageProps) {
   const { header, children } = props;
-  const user = localStorage.getItem("username");
+  const user = sessionStorage.getItem("user");
   return (
     <Container>
       <Header>

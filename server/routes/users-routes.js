@@ -6,8 +6,10 @@ const router = express.Router();
 
 router.get("/all", usersRoutes.usersAll);
 
-router.get("/:username/:password", usersRoutes.usersGet);
+router.get("/:username/:password", usersRoutes.userGet);
 
-router.post("/create", usersRoutes.usersCreate);
+router.post("/create", usersRoutes.userCreate);
+
+router.post("/login", usersRoutes.userLogin);
 
 module.exports = router;

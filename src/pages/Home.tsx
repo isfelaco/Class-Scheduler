@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, ButtonRow, LinkedButton } from "../components/Button";
-import { createUser, fetchUser, fetchUsers } from "../hooks/userHooks";
+import { createUser, loginUser } from "../hooks/userHooks";
 import { User } from "../types";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
@@ -18,12 +18,10 @@ const HomeContainer = styled.div`
 `;
 
 export default function Home() {
-  // fetchUsers().then((res) => console.log(res));
-  const [user, setUser] = useState<string | null>(
-    localStorage.getItem("username")
-  );
+  const [user, setUser] = useState<string | null>(localStorage.getItem("user"));
   const [newUser, setNewUser] = useState<User | null>(null);
   const [openModal, setModal] = useState(false);
+  const [error, setError] = useState("");
 
   // source: https://www.designcise.com/web/tutorial/how-to-convert-html-form-data-to-javascript-object
   function formDataToObject(formData: any) {
@@ -40,13 +38,15 @@ export default function Home() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const obj = formDataToObject(formData);
-    fetchUser(obj).then((res) => {
-      if (res) {
-        localStorage.setItem("username", obj.username);
-        setUser(obj.username);
+    loginUser(obj).then((res) => {
+      if (res.error) {
+        if (res.error === "User not found") {
+          setNewUser(obj);
+          setModal(true);
+        } else setError(res.error);
       } else {
-        setNewUser(obj);
-        setModal(true);
+        setError("");
+        setUser(res.user);
       }
     });
   };
@@ -54,15 +54,14 @@ export default function Home() {
   const handleCreateUser = async () => {
     if (newUser) {
       await createUser(newUser);
-      localStorage.setItem("username", newUser.username);
-      setUser(newUser.username);
+      loginUser(newUser).then((res) => setUser(res.user));
     }
     setModal(false);
   };
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.clear();
+    sessionStorage.clear();
   };
 
   return (
@@ -74,14 +73,17 @@ export default function Home() {
           : "Log in or create an account to continue"}
       </i>
       {user && (
-        <ButtonRow>
-          <LinkedButton link={`/${user}/my-classes`} state={user}>
-            View Classes
-          </LinkedButton>
-          <LinkedButton link={`/${user}/my-assignments`} state={user}>
-            View Assignments
-          </LinkedButton>
-        </ButtonRow>
+        <>
+          <ButtonRow>
+            <LinkedButton link={`/${user}/my-classes`} state={user}>
+              View Classes
+            </LinkedButton>
+            <LinkedButton link={`/${user}/my-assignments`} state={user}>
+              View Assignments
+            </LinkedButton>
+          </ButtonRow>
+          <Button onClick={handleLogout}>Logout</Button>
+        </>
       )}
       {!user && (
         <Form onSubmit={handleLogin}>
@@ -92,7 +94,7 @@ export default function Home() {
           <input type="submit" value="Login" className="submit" />
         </Form>
       )}
-      <Button onClick={handleLogout}>Logout</Button>
+      {error && <i>{error}</i>}
       {openModal && (
         <Modal onClose={() => setModal(false)}>
           <h1>Create User</h1>

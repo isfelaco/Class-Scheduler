@@ -31,6 +31,22 @@ export const createUser = (props: User) => {
     });
 };
 
+export const loginUser = (props: User) => {
+  return axios
+    .post("http://localhost:4001/users/login", {
+      username: props.username,
+      password: props.password,
+    })
+    .then((res) => {
+      if (!res.data.error) sessionStorage.setItem("user", res.data.user);
+      return res.data;
+    })
+    .catch((error) => {
+      console.error("There was an error loggging in the user");
+      throw new Error(error);
+    });
+};
+
 export const fetchUser = async (user: User) => {
   return await axios
     .get(`http://localhost:4001/users/${user.username}/${user.password}`)
