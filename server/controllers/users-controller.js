@@ -55,13 +55,15 @@ exports.userCreate = async (req, res) => {
     });
 };
 
+// verifies users password
+// source: https://stackoverflow.com/questions/38343688/query-in-knex-js-for-users-and-password-validation
 exports.userLogin = async (req, res) => {
   knex("Users")
     .where({ username: req.body.username })
     .select("password")
     .then((result) => {
       if (req.body.password == result[0].password) {
-        res.json({ message: "Login successful" });
+        res.json({ message: "Login successful", user: req.body.username });
       } else {
         res.json({ error: "Incorrect password" });
       }

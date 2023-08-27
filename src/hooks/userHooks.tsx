@@ -38,6 +38,7 @@ export const loginUser = (props: User) => {
       password: props.password,
     })
     .then((res) => {
+      if (!res.data.error) sessionStorage.setItem("user", res.data.user);
       return res.data;
     })
     .catch((error) => {

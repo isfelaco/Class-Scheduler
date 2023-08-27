@@ -43,14 +43,10 @@ export default function Home() {
         if (res.error === "User not found") {
           setNewUser(obj);
           setModal(true);
-        }
-        if (res.error === "Incorrect password") {
-          setError("Incorrect Password");
-        }
+        } else setError(res.error);
       } else {
         setError("");
-        localStorage.setItem("user", obj.username);
-        setUser(obj.username);
+        setUser(res.user);
       }
     });
   };
@@ -58,15 +54,14 @@ export default function Home() {
   const handleCreateUser = async () => {
     if (newUser) {
       await createUser(newUser);
-      localStorage.setItem("user", newUser.username);
-      setUser(newUser.username);
+      loginUser(newUser).then((res) => setUser(res.user));
     }
     setModal(false);
   };
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.clear();
+    sessionStorage.clear();
   };
 
   return (
